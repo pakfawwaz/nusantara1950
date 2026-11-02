@@ -1,0 +1,1222 @@
+{
+ "_note": "World events, disasters, decisions and ending rules (M6). Every number is a modelling assumption, not a statistical estimate. Sector indices: 0 food crops, 1 plantation, 2 fisheries, 3 forestry, 4 mining, 5 oil & gas, 6 manufacturing, 7 construction, 8 trade & services, 9 tourism. Shock fields: months (duration), sector[] + mult (output multiplier on those sectors; omit sector = all), prov[] (province ids; output multiplier mult in those provinces), oil / commodity (price multipliers), stab (offset to the stability target, points), clim (offset to the investment-climate target, points), infl (offset to the inflation target, per year), mort (extra mortality as a multiplier increment on all age groups), fx (one-off real depreciation: external debt in rupiah rises by this fraction).",
+ "settings": {
+  "lose": {
+   "hyper": true,
+   "collapse": true,
+   "default": true,
+   "timeout": true
+  },
+  "hyperInflationPerYear": 5.0,
+  "hyperMonths": 3,
+  "defaultServiceOverRevenue": 0.6,
+  "defaultMonths": 24,
+  "endYear": 2050,
+  "winSustainMonths": 3
+ },
+ "score": {
+  "_note": "Win score 0-1000: earliness (2050 -> 0, 1990 -> full), human development, poverty, stability, equality and a debt term. A loss scores the progress made (share of the target reached, capped at 60%) times 600.",
+  "earliestYear": 1990,
+  "latestYear": 2050,
+  "weights": {
+   "earliness": 400,
+   "ipm": 200,
+   "poverty": 150,
+   "stability": 100,
+   "equality": 100,
+   "debt": 50
+  },
+  "ineqBest": 0.3,
+  "ineqWorst": 0.6,
+  "debtGood": 0.3,
+  "debtBad": 1.0,
+  "lossCap": 0.6,
+  "lossScale": 600
+ },
+ "random": {
+  "_note": "Randomized mode: Poisson arrivals per year inside the window; duration, depth and timing drawn from the seeded generator, so a seed replays the same world.",
+  "events": [
+   {
+    "id": "r_recession",
+    "name": "Global recession",
+    "text": "A deep recession abroad cuts demand for exports and raw materials.",
+    "rate": 0.045,
+    "from": 1952,
+    "to": 2050,
+    "months": [
+     14,
+     30
+    ],
+    "mult": [
+     0.93,
+     0.97
+    ],
+    "sector": [
+     4,
+     5,
+     6,
+     1,
+     3
+    ],
+    "commodity": [
+     0.65,
+     0.85
+    ],
+    "clim": [
+     -8,
+     -4
+    ],
+    "stab": [
+     -3,
+     -1
+    ]
+   },
+   {
+    "id": "r_oil_up",
+    "name": "Oil price spike",
+    "text": "A supply shock sends oil prices sharply higher: good for exporters, bad for fuel subsidies.",
+    "rate": 0.03,
+    "from": 1955,
+    "to": 2050,
+    "months": [
+     30,
+     60
+    ],
+    "oil": [
+     1.5,
+     2.4
+    ]
+   },
+   {
+    "id": "r_oil_down",
+    "name": "Oil glut",
+    "text": "Oil markets are flooded and prices collapse.",
+    "rate": 0.03,
+    "from": 1955,
+    "to": 2050,
+    "months": [
+     30,
+     72
+    ],
+    "oil": [
+     0.45,
+     0.7
+    ]
+   },
+   {
+    "id": "r_comm_boom",
+    "name": "Commodity boom",
+    "text": "Demand from fast-growing economies lifts prices of minerals, estate crops and timber.",
+    "rate": 0.035,
+    "from": 1952,
+    "to": 2050,
+    "months": [
+     36,
+     84
+    ],
+    "commodity": [
+     1.3,
+     1.7
+    ]
+   },
+   {
+    "id": "r_fin_crisis",
+    "name": "Regional financial crisis",
+    "text": "Capital flees the region; the rupiah collapses and debts denominated in dollars balloon.",
+    "rate": 0.022,
+    "from": 1970,
+    "to": 2050,
+    "months": [
+     14,
+     24
+    ],
+    "mult": [
+     0.88,
+     0.94
+    ],
+    "sector": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "clim": [
+     -25,
+     -14
+    ],
+    "stab": [
+     -10,
+     -6
+    ],
+    "infl": [
+     0.2,
+     0.5
+    ],
+    "fx": [
+     0.25,
+     0.5
+    ]
+   },
+   {
+    "id": "r_pandemic",
+    "name": "Pandemic",
+    "text": "A new disease spreads worldwide; deaths rise and services, trade and tourism contract.",
+    "rate": 0.018,
+    "from": 1960,
+    "to": 2050,
+    "months": [
+     14,
+     26
+    ],
+    "mult": [
+     0.88,
+     0.95
+    ],
+    "sector": [
+     8,
+     9,
+     6
+    ],
+    "mort": [
+     0.1,
+     0.28
+    ],
+    "stab": [
+     -5,
+     -2
+    ]
+   },
+   {
+    "id": "r_unrest",
+    "name": "Regional unrest",
+    "text": "Separatist or sectarian violence disrupts a region.",
+    "rate": 0.05,
+    "from": 1951,
+    "to": 2050,
+    "months": [
+     24,
+     60
+    ],
+    "mult": [
+     0.82,
+     0.93
+    ],
+    "stab": [
+     -5,
+     -2
+    ],
+    "region": true
+   },
+   {
+    "id": "r_harvest",
+    "name": "Bumper harvest cycle",
+    "text": "Good weather lifts yields across the country.",
+    "rate": 0.05,
+    "from": 1951,
+    "to": 2050,
+    "months": [
+     12,
+     24
+    ],
+    "mult": [
+     1.02,
+     1.05
+    ],
+    "sector": [
+     0,
+     1,
+     2
+    ]
+   }
+  ]
+ },
+ "timeline": [
+  {
+   "id": "korea_boom",
+   "year": 1950,
+   "month": 11,
+   "name": "Korean War commodity boom",
+   "text": "The war drives up prices of rubber, tin and other raw materials; export revenue jumps for a year or two.",
+   "kind": "world",
+   "shock": {
+    "months": 20,
+    "commodity": 1.5
+   }
+  },
+  {
+   "id": "korea_bust",
+   "year": 1952,
+   "month": 8,
+   "name": "Commodity prices fall back",
+   "text": "The boom ends. Raw-material prices drop and the treasury feels it.",
+   "kind": "world",
+   "shock": {
+    "months": 30,
+    "commodity": 0.82,
+    "clim": -3
+   }
+  },
+  {
+   "id": "rebellions",
+   "year": 1957,
+   "month": 3,
+   "name": "Regional rebellions (PRRI / Permesta)",
+   "text": "Army commanders in Sumatra and Sulawesi break with Jakarta; trade with the outer islands is disrupted.",
+   "kind": "world",
+   "shock": {
+    "months": 36,
+    "prov": [
+     "SUMTENG",
+     "SULAWESI"
+    ],
+    "mult": 0.9,
+    "stab": -4
+   }
+  },
+  {
+   "id": "dutch_enterprises",
+   "year": 1957,
+   "month": 12,
+   "name": "Dutch enterprises",
+   "text": "Unions seize Dutch firms across the country while the West New Guinea dispute drags on.",
+   "kind": "decision",
+   "decision": "dutch_enterprises"
+  },
+  {
+   "id": "transmigration_start",
+   "year": 1952,
+   "month": 3,
+   "name": "Resettlement from Java",
+   "text": "Java is crowded and the outer islands are empty; resettlement schemes are proposed.",
+   "kind": "decision",
+   "decision": "transmigration"
+  },
+  {
+   "id": "irian_barat",
+   "year": 1962,
+   "month": 1,
+   "name": "West New Guinea",
+   "text": "Diplomacy and force are both on the table over the last Dutch-held territory.",
+   "kind": "decision",
+   "decision": "irian_barat"
+  },
+  {
+   "id": "konfrontasi",
+   "year": 1963,
+   "month": 9,
+   "name": "Confrontation with Malaysia",
+   "text": "Trade with Malaysia and Singapore stops and investors stay away.",
+   "kind": "world",
+   "shock": {
+    "months": 30,
+    "clim": -10,
+    "stab": -3,
+    "mult": 0.97,
+    "sector": [
+     1,
+     3,
+     8
+    ]
+   }
+  },
+  {
+   "id": "crisis_1965",
+   "year": 1965,
+   "month": 10,
+   "name": "Political upheaval",
+   "text": "A violent political crisis shakes the state; capital flees and inflation takes off.",
+   "kind": "world",
+   "shock": {
+    "months": 18,
+    "stab": -12,
+    "clim": -20,
+    "infl": 0.35,
+    "mult": 0.96
+   }
+  },
+  {
+   "id": "investment_law",
+   "year": 1967,
+   "month": 1,
+   "name": "A new investment regime",
+   "text": "Foreign lenders and investors ask for a legal framework for foreign capital.",
+   "kind": "decision",
+   "decision": "investment_law"
+  },
+  {
+   "id": "family_planning",
+   "year": 1968,
+   "month": 6,
+   "name": "Population policy",
+   "text": "Java's population is growing about 2% a year. Advisers propose a national family-planning programme.",
+   "kind": "decision",
+   "decision": "family_planning"
+  },
+  {
+   "id": "oil_shock_1973",
+   "year": 1973,
+   "month": 10,
+   "name": "First oil shock",
+   "text": "OPEC embargoes push oil prices up fourfold. Oil revenue surges (prices follow the history table).",
+   "kind": "world",
+   "shock": {
+    "months": 6
+   }
+  },
+  {
+   "id": "oil_shock_1979",
+   "year": 1979,
+   "month": 3,
+   "name": "Second oil shock",
+   "text": "Revolution in Iran doubles oil prices again.",
+   "kind": "world",
+   "shock": {
+    "months": 6
+   }
+  },
+  {
+   "id": "oil_collapse_1986",
+   "year": 1986,
+   "month": 3,
+   "name": "Oil price collapse",
+   "text": "Oil falls by more than half. Revenue drops sharply and the rupiah is devalued.",
+   "kind": "world",
+   "shock": {
+    "months": 24,
+    "clim": -8,
+    "mult": 0.985,
+    "fx": 0.18
+   }
+  },
+  {
+   "id": "asian_crisis",
+   "year": 1997,
+   "month": 7,
+   "name": "Asian financial crisis",
+   "text": "The Thai baht collapses; within months the rupiah has lost most of its value, banks fail and unrest grows.",
+   "kind": "world",
+   "shock": {
+    "months": 24,
+    "mult": 0.88,
+    "sector": [
+     6,
+     7,
+     8,
+     9
+    ],
+    "clim": -28,
+    "stab": -12,
+    "infl": 0.5,
+    "fx": 0.5
+   }
+  },
+  {
+   "id": "autonomy_1999",
+   "year": 1999,
+   "month": 5,
+   "name": "Regional autonomy",
+   "text": "Calls for decentralisation grow after the fall of the old regime.",
+   "kind": "decision",
+   "decision": "autonomy"
+  },
+  {
+   "id": "gfc_2008",
+   "year": 2008,
+   "month": 10,
+   "name": "Global financial crisis",
+   "text": "Credit freezes in the rich world; export demand and capital inflows weaken.",
+   "kind": "world",
+   "shock": {
+    "months": 14,
+    "mult": 0.97,
+    "sector": [
+     4,
+     5,
+     6,
+     1,
+     3
+    ],
+    "clim": -8,
+    "stab": -1
+   }
+  },
+  {
+   "id": "commodity_boom_2011",
+   "year": 2010,
+   "month": 6,
+   "name": "Commodity super-cycle",
+   "text": "Coal, palm oil and metals prices climb (prices follow the history table).",
+   "kind": "world",
+   "shock": {
+    "months": 6
+   }
+  },
+  {
+   "id": "commodity_bust_2014",
+   "year": 2014,
+   "month": 9,
+   "name": "Commodity bust",
+   "text": "Prices of coal, oil and palm oil fall hard; export revenue and royalties shrink.",
+   "kind": "world",
+   "shock": {
+    "months": 30,
+    "commodity": 0.9,
+    "clim": -4
+   }
+  },
+  {
+   "id": "pandemic_2020",
+   "year": 2020,
+   "month": 3,
+   "name": "Pandemic",
+   "text": "A new coronavirus reaches the archipelago: hospitals fill, tourism stops and trade contracts.",
+   "kind": "world",
+   "shock": {
+    "months": 20,
+    "mult": 0.9,
+    "sector": [
+     8,
+     9,
+     6,
+     7
+    ],
+    "mort": 0.12,
+    "stab": -4,
+    "clim": -6
+   }
+  }
+ ],
+ "disasters": {
+  "_note": "Random natural disasters (all modes); epicentre drawn from province weights. sev = share of capital stock destroyed at the epicentre; output falls by outputPerSev * sev at the centre (halving per ring of neighbouring kecamatan) and recovers linearly. deathPerSev = share of local population killed at sev = 1 before the vulnerability factor. The state pays reliefShare of the destroyed capital over reliefMonths.",
+  "outputPerSev": 1.2,
+  "ringDecay": 0.5,
+  "reliefShare": 0.3,
+  "reliefMonths": 12,
+  "vulnerabilityIncomeRef": 20000000,
+  "vulnerabilityExp": 0.3,
+  "kinds": [
+   {
+    "id": "earthquake",
+    "name": "Earthquake",
+    "rate": 0.8,
+    "months": [
+     1,
+     12
+    ],
+    "sev": [
+     0.02,
+     0.22
+    ],
+    "rings": [
+     1,
+     3
+    ],
+    "deathPerSev": 0.012,
+    "recover": [
+     10,
+     40
+    ],
+    "coastal": 1.2,
+    "weights": {
+     "SUMUT": 2,
+     "SUMTENG": 3,
+     "SUMSEL": 1.5,
+     "JABAR": 2.5,
+     "JATENG": 1,
+     "DIY": 1.5,
+     "JATIM": 1,
+     "SULAWESI": 3,
+     "MALUKU": 2.5,
+     "SUNDAKECIL": 2.5,
+     "KALIMANTAN": 0.1,
+     "IRIANBARAT": 3
+    }
+   },
+   {
+    "id": "volcano",
+    "name": "Volcanic eruption",
+    "rate": 0.5,
+    "months": [
+     1,
+     12
+    ],
+    "sev": [
+     0.02,
+     0.2
+    ],
+    "rings": [
+     1,
+     2
+    ],
+    "deathPerSev": 0.006,
+    "recover": [
+     10,
+     36
+    ],
+    "coastal": 1,
+    "weights": {
+     "SUMUT": 2,
+     "SUMTENG": 2,
+     "SUMSEL": 1.5,
+     "JABAR": 3,
+     "JATENG": 3,
+     "DIY": 1,
+     "JATIM": 3,
+     "SULAWESI": 1.5,
+     "MALUKU": 1.5,
+     "SUNDAKECIL": 3,
+     "KALIMANTAN": 0,
+     "IRIANBARAT": 0
+    }
+   },
+   {
+    "id": "flood",
+    "name": "Major flood",
+    "rate": 1.2,
+    "months": [
+     12,
+     2
+    ],
+    "sev": [
+     0.01,
+     0.1
+    ],
+    "rings": [
+     1,
+     3
+    ],
+    "deathPerSev": 0.002,
+    "recover": [
+     4,
+     18
+    ],
+    "coastal": 1.6,
+    "weights": {
+     "SUMUT": 1,
+     "SUMTENG": 1,
+     "SUMSEL": 1.5,
+     "JABAR": 3,
+     "JATENG": 2,
+     "DIY": 0.5,
+     "JATIM": 2,
+     "KALIMANTAN": 2,
+     "SULAWESI": 1,
+     "MALUKU": 0.5,
+     "SUNDAKECIL": 0.5,
+     "IRIANBARAT": 0.5
+    }
+   },
+   {
+    "id": "drought",
+    "name": "Severe drought",
+    "rate": 0.3,
+    "months": [
+     6,
+     10
+    ],
+    "sev": [
+     0.01,
+     0.06
+    ],
+    "rings": [
+     3,
+     3
+    ],
+    "deathPerSev": 0.0005,
+    "recover": [
+     8,
+     20
+    ],
+    "coastal": 1,
+    "agri": true,
+    "weights": {
+     "JATENG": 1.5,
+     "JATIM": 2,
+     "DIY": 1,
+     "SUNDAKECIL": 3,
+     "SULAWESI": 1,
+     "SUMSEL": 0.7,
+     "JABAR": 0.5,
+     "KALIMANTAN": 0.4
+    }
+   },
+   {
+    "id": "fire",
+    "name": "Forest and peat fires",
+    "rate": 0.25,
+    "months": [
+     8,
+     10
+    ],
+    "sev": [
+     0.005,
+     0.04
+    ],
+    "rings": [
+     2,
+     3
+    ],
+    "deathPerSev": 0.0002,
+    "recover": [
+     6,
+     18
+    ],
+    "coastal": 1,
+    "weights": {
+     "KALIMANTAN": 3,
+     "SUMSEL": 3,
+     "SUMTENG": 2.5,
+     "SUMUT": 0.5,
+     "SULAWESI": 0.3
+    }
+   },
+   {
+    "id": "tsunami",
+    "name": "Tsunami",
+    "rate": 0.12,
+    "months": [
+     1,
+     12
+    ],
+    "sev": [
+     0.04,
+     0.4
+    ],
+    "rings": [
+     1,
+     2
+    ],
+    "deathPerSev": 0.03,
+    "recover": [
+     18,
+     60
+    ],
+    "coastal": 1,
+    "coastOnly": true,
+    "weights": {
+     "SUMUT": 2,
+     "SUMTENG": 2.5,
+     "SUMSEL": 1,
+     "JABAR": 2,
+     "JATENG": 1,
+     "DIY": 1,
+     "JATIM": 1,
+     "SULAWESI": 2.5,
+     "MALUKU": 2.5,
+     "SUNDAKECIL": 2.5,
+     "IRIANBARAT": 1
+    }
+   }
+  ],
+  "historical": [
+   {
+    "year": 1963,
+    "month": 3,
+    "kind": "volcano",
+    "name": "Gunung Agung erupts (Bali)",
+    "lon": 115.51,
+    "lat": -8.34,
+    "sev": 0.2,
+    "rings": 2
+   },
+   {
+    "year": 1982,
+    "month": 4,
+    "kind": "volcano",
+    "name": "Galunggung erupts",
+    "lon": 108.06,
+    "lat": -7.25,
+    "sev": 0.08,
+    "rings": 2
+   },
+   {
+    "year": 1992,
+    "month": 12,
+    "kind": "earthquake",
+    "name": "Flores earthquake and tsunami",
+    "lon": 122.2,
+    "lat": -8.5,
+    "sev": 0.25,
+    "rings": 2
+   },
+   {
+    "year": 1997,
+    "month": 9,
+    "kind": "fire",
+    "name": "Haze year: Kalimantan and Sumatra fires",
+    "lon": 114.0,
+    "lat": -2.5,
+    "sev": 0.04,
+    "rings": 3
+   },
+   {
+    "year": 2004,
+    "month": 12,
+    "kind": "tsunami",
+    "name": "Aceh earthquake and Indian Ocean tsunami",
+    "lon": 95.3,
+    "lat": 5.55,
+    "sev": 0.4,
+    "rings": 2
+   },
+   {
+    "year": 2006,
+    "month": 5,
+    "kind": "earthquake",
+    "name": "Yogyakarta earthquake",
+    "lon": 110.4,
+    "lat": -7.95,
+    "sev": 0.18,
+    "rings": 2
+   },
+   {
+    "year": 2010,
+    "month": 10,
+    "kind": "volcano",
+    "name": "Merapi erupts",
+    "lon": 110.45,
+    "lat": -7.54,
+    "sev": 0.1,
+    "rings": 2
+   },
+   {
+    "year": 2018,
+    "month": 9,
+    "kind": "tsunami",
+    "name": "Palu earthquake and tsunami",
+    "lon": 119.85,
+    "lat": -0.9,
+    "sev": 0.3,
+    "rings": 1
+   }
+  ]
+ },
+ "decisions": [
+  {
+   "id": "dutch_enterprises",
+   "title": "Dutch enterprises",
+   "year": 1957,
+   "month": 12,
+   "dueMonths": 12,
+   "default": 2,
+   "text": "Dutch-owned estates, sugar mills, banks and shipping lines still dominate parts of the economy. Workers' committees are occupying them in many towns. You must decide how the republic takes control, if at all.",
+   "options": [
+    {
+     "label": "Seize them without compensation",
+     "text": "All Dutch holdings pass to the state at once. Managers and technicians leave: plantation, estate-processing and shipping output fall about 10% for 2\u00bd years. Investors take fright (investment climate hit), the Netherlands and its allies close ranks, and your alignment drifts East. Nationalist feeling lifts stability for two years.",
+     "hist": true,
+     "effects": [
+      {
+       "t": "nationaliseDutch",
+       "pay": false
+      },
+      {
+       "t": "nationHit",
+       "v": 1.0
+      },
+      {
+       "t": "align",
+       "v": 0.3
+      },
+      {
+       "t": "shock",
+       "id": "dutch_exodus",
+       "name": "Dutch managers leave",
+       "months": 30,
+       "sector": [
+        0,
+        1,
+        8
+       ],
+       "mult": 0.9
+      },
+      {
+       "t": "shock",
+       "id": "dutch_pride",
+       "name": "Nationalist surge",
+       "months": 24,
+       "stab": 3
+      }
+     ]
+    },
+    {
+     "label": "Nationalise with compensation",
+     "text": "Dutch holdings are taken over and compensation is added to the legacy debt (payable over decades). A smaller disruption (\u22124% output in the same sectors for a year) and a milder hit to the investment climate.",
+     "smart": true,
+     "effects": [
+      {
+       "t": "nationaliseDutch",
+       "pay": true
+      },
+      {
+       "t": "nationHit",
+       "v": 0.35
+      },
+      {
+       "t": "shock",
+       "id": "dutch_handover",
+       "name": "Handover disruption",
+       "months": 12,
+       "sector": [
+        0,
+        1,
+        8
+       ],
+       "mult": 0.96
+      }
+     ]
+    },
+    {
+     "label": "Leave them in place",
+     "text": "Nothing changes in ownership. Unions and parties accuse you of weakness: stability \u22122 for three years. Investors are reassured (+4 climate for three years).",
+     "effects": [
+      {
+       "t": "shock",
+       "id": "dutch_pressure",
+       "name": "Nationalist pressure",
+       "months": 36,
+       "stab": -2,
+       "clim": 4
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "irian_barat",
+   "title": "West New Guinea",
+   "year": 1962,
+   "month": 1,
+   "dueMonths": 16,
+   "default": 0,
+   "text": "The Netherlands still holds West New Guinea. Diplomats propose a UN-supervised handover; the army wants to force the issue with a landing and air campaign. Irian Barat is not under your administration until it is transferred.",
+   "options": [
+    {
+     "label": "Negotiate (UN transition)",
+     "text": "A UN interim administration hands the territory over in May 1963. Little cost, but the political credit goes to the mediators.",
+     "smart": true,
+     "effects": [
+      {
+       "t": "join",
+       "prov": "IRIANBARAT",
+       "year": 1963,
+       "month": 5
+      }
+     ]
+    },
+    {
+     "label": "Mobilise and threaten force",
+     "text": "A military build-up for 18 months costs about 1.5% of GDP in extra spending (paid at once, spread by the treasury), lifts your standing with the army and the Eastern bloc (alignment +0.35, stability +2 for a year) and brings the transfer forward to January 1963. Investors are uneasy (\u22126 climate for two years).",
+     "hist": true,
+     "effects": [
+      {
+       "t": "costPctGdp",
+       "v": 1.5
+      },
+      {
+       "t": "align",
+       "v": 0.35
+      },
+      {
+       "t": "shock",
+       "id": "trikora",
+       "name": "Military mobilisation",
+       "months": 24,
+       "clim": -6
+      },
+      {
+       "t": "shock",
+       "id": "trikora_pride",
+       "name": "Army support",
+       "months": 12,
+       "stab": 2
+      },
+      {
+       "t": "join",
+       "prov": "IRIANBARAT",
+       "year": 1963,
+       "month": 1
+      }
+     ]
+    },
+    {
+     "label": "Defer the issue",
+     "text": "No transfer until 1969. Stability \u22122 for two years as the nationalist press protests.",
+     "effects": [
+      {
+       "t": "join",
+       "prov": "IRIANBARAT",
+       "year": 1969,
+       "month": 8
+      },
+      {
+       "t": "shock",
+       "id": "irian_delay",
+       "name": "Nationalist protest",
+       "months": 24,
+       "stab": -2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "transmigration",
+   "title": "Resettlement from Java",
+   "year": 1952,
+   "month": 3,
+   "dueMonths": 24,
+   "default": 2,
+   "text": "Java and Bali hold two thirds of the population on seven percent of the land. Colonisation (later called transmigration) moves families to the outer islands. It is expensive, and migrants often struggle for years.",
+   "options": [
+    {
+     "label": "Fund it seriously (0.08% of GDP)",
+     "text": "Sets the Transmigration budget line to 0.08% of GDP from next January. You can change it at any time in the Budget window.",
+     "smart": false,
+     "effects": [
+      {
+       "t": "budget",
+       "key": "transmigration",
+       "v": 0.08
+      }
+     ]
+    },
+    {
+     "label": "Small pilot schemes (0.03% of GDP)",
+     "text": "Sets the Transmigration line to 0.03% of GDP.",
+     "hist": true,
+     "effects": [
+      {
+       "t": "budget",
+       "key": "transmigration",
+       "v": 0.03
+      }
+     ]
+    },
+    {
+     "label": "Not now",
+     "text": "Leave the line at zero.",
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "investment_law",
+   "title": "Foreign investment law",
+   "year": 1967,
+   "month": 1,
+   "dueMonths": 24,
+   "default": 1,
+   "cond": "noFdiLaw",
+   "text": "The IMF, the creditors' consortium and several investors say they will not put real money in without a law that guarantees foreign property and profit transfers. Nationalists warn that it hands the economy to foreigners.",
+   "options": [
+    {
+     "label": "Enact the investment law",
+     "text": "Opens foreign direct investment (Industry tool, Foreign investment financing) and improves the investment climate. Foreign profits leave the country and nationalist feeling rises over time.",
+     "hist": true,
+     "smart": true,
+     "effects": [
+      {
+       "t": "fdiLaw"
+      }
+     ]
+    },
+    {
+     "label": "Not yet",
+     "text": "Foreign investment stays closed. You can still enact the law in the Finance window.",
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "family_planning",
+   "title": "Family planning programme",
+   "year": 1968,
+   "month": 6,
+   "dueMonths": 24,
+   "default": 2,
+   "text": "Population is growing about 2.2% a year. Health officials propose a national programme of clinics, field workers and contraceptive supply. Religious conservatives object.",
+   "options": [
+    {
+     "label": "National programme (0.10% of GDP)",
+     "text": "Sets the Family planning budget line to 0.10% of GDP. Coverage builds over a decade and cuts fertility. Mild religious opposition (stability \u22121 for two years).",
+     "hist": true,
+     "smart": true,
+     "effects": [
+      {
+       "t": "budget",
+       "key": "kb",
+       "v": 0.1
+      },
+      {
+       "t": "shock",
+       "id": "kb_objection",
+       "name": "Conservative objections",
+       "months": 24,
+       "stab": -1
+      }
+     ]
+    },
+    {
+     "label": "Pilot in Java and Bali (0.04%)",
+     "text": "Sets the Family planning line to 0.04% of GDP.",
+     "effects": [
+      {
+       "t": "budget",
+       "key": "kb",
+       "v": 0.04
+      }
+     ]
+    },
+    {
+     "label": "No programme",
+     "text": "Leaves the line at zero. Population growth stays high for longer.",
+     "effects": []
+    }
+   ]
+  },
+  {
+   "id": "autonomy",
+   "title": "Regional autonomy",
+   "year": 1999,
+   "month": 5,
+   "dueMonths": 18,
+   "default": 1,
+   "text": "Regions demand a larger share of national revenue and power over their own affairs. Jakarta fears the country could fragment; the regions fear being ignored.",
+   "options": [
+    {
+     "label": "Decentralise broadly",
+     "text": "Raises the general transfer pool (DAU) by 35% of its present size, which means more local development money and less central spending room. Separatist pressure eases (stability +3 for five years). Local capacity varies, so some money is wasted.",
+     "hist": true,
+     "smart": true,
+     "effects": [
+      {
+       "t": "flag",
+       "key": "dauMult",
+       "v": 1.35
+      },
+      {
+       "t": "shock",
+       "id": "autonomy_calm",
+       "name": "Regional grievances ease",
+       "months": 60,
+       "stab": 3
+      }
+     ]
+    },
+    {
+     "label": "Limited autonomy",
+     "text": "A 15% larger transfer pool (DAU) and a smaller stability dividend (+1 for three years).",
+     "effects": [
+      {
+       "t": "flag",
+       "key": "dauMult",
+       "v": 1.15
+      },
+      {
+       "t": "shock",
+       "id": "autonomy_small",
+       "name": "Modest relief",
+       "months": 36,
+       "stab": 1
+      }
+     ]
+    },
+    {
+     "label": "Keep it centralised",
+     "text": "The transfer pool shrinks 15% and regions resent it (stability \u22122 for three years).",
+     "effects": [
+      {
+       "t": "flag",
+       "key": "dauMult",
+       "v": 0.85
+      },
+      {
+       "t": "shock",
+       "id": "centralised",
+       "name": "Regional resentment",
+       "months": 36,
+       "stab": -2
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "fuel_subsidy",
+   "title": "The fuel subsidy bill",
+   "year": 1975,
+   "month": 1,
+   "dueMonths": 12,
+   "default": 2,
+   "cond": "fuelSqueeze",
+   "repeatYears": 7,
+   "text": "Fuel and fertiliser subsidies are eating a growing share of the budget. Cutting them frees money for schools, roads and clinics but raises prices at the pump and in the markets.",
+   "options": [
+    {
+     "label": "Cut sharply (to 40% of today's line)",
+     "text": "Budget subsidies fall to 40% of their present level from next January. Fuel prices jump: inflation +4 points for a year and stability \u22124 for 18 months, with protests.",
+     "smart": true,
+     "effects": [
+      {
+       "t": "budgetFactor",
+       "key": "subsidies",
+       "v": 0.4
+      },
+      {
+       "t": "shock",
+       "id": "fuel_price_jump",
+       "name": "Fuel price shock",
+       "months": 12,
+       "infl": 0.04
+      },
+      {
+       "t": "shock",
+       "id": "fuel_protest",
+       "name": "Fuel protests",
+       "months": 18,
+       "stab": -4
+      }
+     ]
+    },
+    {
+     "label": "Phase it down (to 70%)",
+     "text": "Subsidies fall to 70% of the present level. Inflation +1.5 points for a year, stability \u22121.5 for a year.",
+     "hist": true,
+     "effects": [
+      {
+       "t": "budgetFactor",
+       "key": "subsidies",
+       "v": 0.7
+      },
+      {
+       "t": "shock",
+       "id": "fuel_price_small",
+       "name": "Fuel price rise",
+       "months": 12,
+       "infl": 0.015
+      },
+      {
+       "t": "shock",
+       "id": "fuel_unease",
+       "name": "Subsidy unease",
+       "months": 12,
+       "stab": -1.5
+      }
+     ]
+    },
+    {
+     "label": "Keep the subsidy",
+     "text": "No change; the bill keeps growing with oil prices.",
+     "effects": []
+    }
+   ]
+  }
+ ],
+ "params": {
+  "dutchOilShare": 0.5,
+  "fuelOilTrigger": 1.6,
+  "fuelSubsidyMin": 0.3,
+  "fuelSubsidyHigh": 0.6
+ }
+}

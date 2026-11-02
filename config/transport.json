@@ -1,0 +1,53 @@
+{
+  "_note": "Transport, market access and construction. Money is Rp million in 2026 prices, scaled by costIndex(year) (labour was far cheaper in 1950). Speeds are average door-to-door line speeds in km/h, not design speeds. All numbers are modelling assumptions in the right order of magnitude, not engineering data.",
+  "access": {
+    "betaPerHour": 0.30,
+    "cutoffHours": 10,
+    "coarseMinHours": 10,
+    "coarseCutoffHours": 90,
+    "coarseEveryYears": 5,
+    "detour": 1.3,
+    "spanKmPerHour": 9
+  },
+  "offroad": { "speedKmh": [14, 14, 9, 5], "swampFactor": 0.5 },
+  "terrainCostFactor": { "swamp": 1.6, "monthsSwamp": 1.3, "monthsByTerrain": [1.0, 1.0, 1.25, 1.8] },
+  "costIndex": [[1950, 0.45], [1975, 0.6], [2000, 0.8], [2026, 1.0], [2050, 1.1]],
+  "governance": { "overrunMax": 0.6, "overrunBase": 0.05 },
+  "roads": [
+    { "name": "Track", "unlock": 1950, "speedKmh": 0, "cost": [0, 0, 0, 0], "monthsBase": 0, "monthsPerKm": 0, "maintPerKm": 0 },
+    { "name": "Jalan kabupaten", "unlock": 1950, "speedKmh": 28, "cost": [2500, 3000, 4500, 7500], "monthsBase": 2, "monthsPerKm": 0.08, "maintPerKm": 25 },
+    { "name": "Jalan provinsi", "unlock": 1950, "speedKmh": 42, "cost": [5000, 6000, 9000, 15000], "monthsBase": 3, "monthsPerKm": 0.12, "maintPerKm": 60 },
+    { "name": "Jalan nasional", "unlock": 1955, "speedKmh": 60, "cost": [10000, 12000, 18000, 30000], "monthsBase": 4, "monthsPerKm": 0.18, "maintPerKm": 120 },
+    { "name": "Jalan tol (toll motorway)", "unlock": 1975, "speedKmh": 85, "cost": [60000, 70000, 100000, 180000], "monthsBase": 12, "monthsPerKm": 0.35, "maintPerKm": 500 },
+    { "name": "High-capacity toll", "unlock": 2000, "speedKmh": 105, "cost": [110000, 130000, 190000, 320000], "monthsBase": 18, "monthsPerKm": 0.5, "maintPerKm": 900 }
+  ],
+  "upgradeCredit": 0.6,
+  "minUpgradeShare": 0.2,
+  "roadCondition": { "speedFloor": 0.5, "start": [1, 0.6, 0.6, 1, 1, 1], "decayPerYearUnfunded": 0.12, "recoverPerYearFunded": 0.18 },
+  "rail": [
+    { "name": "Narrow-gauge single track", "unlock": 1950, "speedKmh": 42, "cost": [18000, 22000, 40000, 75000], "monthsBase": 6, "monthsPerKm": 0.45, "maintPerKm": 120, "opPerKm": 90 },
+    { "name": "Double track", "unlock": 1960, "speedKmh": 65, "cost": [40000, 48000, 80000, 140000], "monthsBase": 8, "monthsPerKm": 0.5, "maintPerKm": 250, "opPerKm": 160 },
+    { "name": "Electrified commuter rail", "unlock": 1976, "speedKmh": 80, "cost": [70000, 80000, 130000, 220000], "monthsBase": 12, "monthsPerKm": 0.6, "maintPerKm": 400, "opPerKm": 260 },
+    { "name": "Standard-gauge high-speed", "unlock": 2010, "speedKmh": 220, "cost": [500000, 600000, 900000, 1400000], "monthsBase": 30, "monthsPerKm": 0.9, "maintPerKm": 2000, "opPerKm": 900 }
+  ],
+  "railDetour": 1.15,
+  "railDwellMinutes": [0, 3, 8],
+  "railCondition": { "speedFloor": 0.55, "startDegraded": 0.5, "start": 0.65 },
+  "station": { "cost": [0, 40000, 150000], "months": [0, 3, 6], "unlock": 1950 },
+  "railService": {
+    "catchmentMult": [0, 1.5, 3.0], "tripsPerCapitaYear": 0.6, "incomeElasticity": 0.7, "speedElasticity": 0.5, "refSpeedKmh": 42, "distanceOffsetKm": 20,
+    "farePerPkmRp": 800, "freightPerOutput": 0.012, "freightSectors": [0, 1, 3, 4, 5, 6]
+  },
+  "ports": {
+    "levels": [
+      { "name": "No port", "unlock": 1950, "cost": 0, "months": 0, "maint": 0, "speedKmh": 0, "handlingHours": 0, "rangeKm": 0 },
+      { "name": "Small port", "unlock": 1950, "cost": 80000, "months": 12, "maint": 1500, "speedKmh": 13, "handlingHours": 40, "rangeKm": 350 },
+      { "name": "Regional port", "unlock": 1950, "cost": 300000, "months": 24, "maint": 3000, "speedKmh": 17, "handlingHours": 20, "rangeKm": 1200 },
+      { "name": "National port", "unlock": 1950, "cost": 1200000, "months": 48, "maint": 12000, "speedKmh": 22, "handlingHours": 10, "rangeKm": 3000 },
+      { "name": "International hub", "unlock": 1985, "cost": 6000000, "months": 84, "maint": 50000, "speedKmh": 28, "handlingHours": 5, "rangeKm": 6000 }
+    ],
+    "nearestLinks": 5,
+    "minCoastKm": 1.0
+  },
+  "routing": { "reuseFactor": 0.05 }
+}

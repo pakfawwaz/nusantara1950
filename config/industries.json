@@ -1,0 +1,1209 @@
+{
+ "_note": "Industries, financing, alignment, investment climate, exploration. Costs and value added are Rp million at 2026 prices (cost scaled by the transport cost index of the year); value added is per year at full capacity and full utilisation. Modelling assumptions in the right order of magnitude, not company data. Capital costs include a capital-output ratio of roughly 3\u20136 years of value added.",
+ "types": [
+  {
+   "id": "sugar_mill",
+   "name": "Sugar mill",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 1,
+   "cost": 1000000,
+   "months": 18,
+   "va": 120000,
+   "margin": 0.3,
+   "fdi": true,
+   "jobs": 1500,
+   "requires": {
+    "mys": 0.8,
+    "elec": 0.05,
+    "road": 1
+   },
+   "needs": [],
+   "link": {
+    "sector": 1,
+    "strength": 0.08,
+    "hours": 3
+   }
+  },
+  {
+   "id": "textile",
+   "name": "Textile & garment mill",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 6,
+   "cost": 1500000,
+   "months": 18,
+   "va": 250000,
+   "margin": 0.22,
+   "fdi": true,
+   "jobs": 3000,
+   "requires": {
+    "mys": 1.5,
+    "elec": 0.15,
+    "road": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.05,
+    "hours": 3
+   },
+   "tfp": [
+    [
+     6,
+     0.0004
+    ]
+   ]
+  },
+  {
+   "id": "cement",
+   "name": "Cement plant",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 6,
+   "cost": 3750000,
+   "months": 30,
+   "va": 450000,
+   "margin": 0.25,
+   "fdi": true,
+   "jobs": 1200,
+   "requires": {
+    "mys": 1.5,
+    "elec": 0.1,
+    "road": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 7,
+    "strength": 0.1,
+    "hours": 4
+   }
+  },
+  {
+   "id": "shipyard",
+   "name": "Shipyard",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 6,
+   "cost": 7500000,
+   "months": 36,
+   "va": 400000,
+   "margin": 0.1,
+   "fdi": true,
+   "jobs": 2500,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.15,
+    "port": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.05,
+    "hours": 3
+   }
+  },
+  {
+   "id": "shipping_line",
+   "name": "National shipping line",
+   "unlock": 1950,
+   "kind": "service",
+   "sector": 8,
+   "cost": 3750000,
+   "months": 24,
+   "va": 500000,
+   "margin": 0.1,
+   "fdi": true,
+   "jobs": 2000,
+   "requires": {
+    "mys": 2,
+    "port": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 8,
+    "strength": 0.03,
+    "hours": 6
+   }
+  },
+  {
+   "id": "airline",
+   "name": "National airline",
+   "unlock": 1950,
+   "kind": "service",
+   "sector": 8,
+   "cost": 2500000,
+   "months": 18,
+   "va": 350000,
+   "margin": 0.08,
+   "fdi": true,
+   "jobs": 1500,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.2,
+    "road": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 9,
+    "strength": 0.05,
+    "hours": 6
+   }
+  },
+  {
+   "id": "tin_smelter",
+   "name": "Tin smelter",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 6,
+   "cost": 3000000,
+   "months": 30,
+   "va": 500000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 800,
+   "requires": {
+    "mys": 2,
+    "elec": 0.2,
+    "port": 1
+   },
+   "needs": [
+    "tin"
+   ]
+  },
+  {
+   "id": "refinery",
+   "name": "Oil refinery",
+   "unlock": 1950,
+   "kind": "process",
+   "sector": 6,
+   "cost": 12500000,
+   "months": 36,
+   "va": 1500000,
+   "margin": 0.12,
+   "fdi": true,
+   "jobs": 1500,
+   "requires": {
+    "mys": 2,
+    "elec": 0.2,
+    "port": 2
+   },
+   "needs": [
+    "oil"
+   ],
+   "link": {
+    "sector": 6,
+    "strength": 0.06,
+    "hours": 3
+   }
+  },
+  {
+   "id": "fertilizer",
+   "name": "Fertilizer (urea) plant",
+   "unlock": 1960,
+   "kind": "process",
+   "sector": 6,
+   "cost": 15000000,
+   "months": 36,
+   "va": 1200000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 1200,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.2,
+    "port": 1
+   },
+   "needs": [
+    "gas"
+   ],
+   "link": {
+    "sector": 0,
+    "strength": 0.12,
+    "hours": 6
+   }
+  },
+  {
+   "id": "steel_mill",
+   "name": "Steel mill",
+   "unlock": 1955,
+   "kind": "process",
+   "sector": 6,
+   "cost": 37500000,
+   "months": 60,
+   "va": 2500000,
+   "margin": 0.15,
+   "fdi": true,
+   "jobs": 5000,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.25,
+    "port": 2,
+    "road": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.12,
+    "hours": 4
+   },
+   "tfp": [
+    [
+     6,
+     0.001
+    ]
+   ]
+  },
+  {
+   "id": "lng",
+   "name": "LNG plant",
+   "unlock": 1970,
+   "kind": "process",
+   "sector": 5,
+   "cost": 30000000,
+   "months": 48,
+   "va": 3500000,
+   "margin": 0.35,
+   "fdi": true,
+   "jobs": 1200,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.15,
+    "port": 3
+   },
+   "needs": [
+    "gas"
+   ]
+  },
+  {
+   "id": "petrochem",
+   "name": "Petrochemical complex",
+   "unlock": 1975,
+   "kind": "process",
+   "sector": 6,
+   "cost": 50000000,
+   "months": 54,
+   "va": 3000000,
+   "margin": 0.15,
+   "fdi": true,
+   "jobs": 3000,
+   "requires": {
+    "mys": 3,
+    "elec": 0.3,
+    "port": 2,
+    "road": 2
+   },
+   "needs": [
+    "oil"
+   ],
+   "link": {
+    "sector": 6,
+    "strength": 0.15,
+    "hours": 4
+   },
+   "tfp": [
+    [
+     6,
+     0.001
+    ]
+   ]
+  },
+  {
+   "id": "aluminium",
+   "name": "Aluminium smelter",
+   "unlock": 1975,
+   "kind": "process",
+   "sector": 6,
+   "cost": 35000000,
+   "months": 60,
+   "va": 2400000,
+   "margin": 0.18,
+   "fdi": true,
+   "jobs": 2500,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.3,
+    "port": 2
+   },
+   "needs": [
+    "hydro"
+   ],
+   "link": {
+    "sector": 6,
+    "strength": 0.1,
+    "hours": 4
+   }
+  },
+  {
+   "id": "nickel_smelter",
+   "name": "Nickel smelter",
+   "unlock": 1968,
+   "kind": "process",
+   "sector": 6,
+   "cost": 20000000,
+   "months": 48,
+   "va": 2000000,
+   "margin": 0.22,
+   "fdi": true,
+   "jobs": 2500,
+   "requires": {
+    "mys": 2.5,
+    "elec": 0.35,
+    "port": 1
+   },
+   "needs": [
+    "nickel"
+   ]
+  },
+  {
+   "id": "copper_smelter",
+   "name": "Copper smelter",
+   "unlock": 1990,
+   "kind": "process",
+   "sector": 6,
+   "cost": 25000000,
+   "months": 48,
+   "va": 2400000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 1500,
+   "requires": {
+    "mys": 3,
+    "elec": 0.3,
+    "port": 2
+   },
+   "needs": [
+    "copper"
+   ]
+  },
+  {
+   "id": "aircraft",
+   "name": "Aircraft industry",
+   "unlock": 1976,
+   "kind": "process",
+   "sector": 6,
+   "cost": 25000000,
+   "months": 60,
+   "va": 600000,
+   "margin": 0.05,
+   "fdi": false,
+   "jobs": 5000,
+   "requires": {
+    "mys": 4,
+    "elec": 0.4,
+    "road": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.05,
+    "hours": 4
+   },
+   "tfp": [
+    [
+     6,
+     0.002
+    ]
+   ]
+  },
+  {
+   "id": "rolling_stock",
+   "name": "Rolling-stock factory",
+   "unlock": 1980,
+   "kind": "process",
+   "sector": 6,
+   "cost": 5000000,
+   "months": 36,
+   "va": 300000,
+   "margin": 0.1,
+   "fdi": false,
+   "jobs": 1500,
+   "requires": {
+    "mys": 3,
+    "elec": 0.3,
+    "station": 1
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.03,
+    "hours": 3
+   }
+  },
+  {
+   "id": "defense_industry",
+   "name": "Defense industry",
+   "unlock": 1983,
+   "kind": "process",
+   "sector": 6,
+   "cost": 7500000,
+   "months": 36,
+   "va": 300000,
+   "margin": 0.02,
+   "fdi": false,
+   "jobs": 3000,
+   "requires": {
+    "mys": 3,
+    "elec": 0.3,
+    "road": 2
+   },
+   "needs": [],
+   "tfp": [
+    [
+     6,
+     0.0005
+    ]
+   ]
+  },
+  {
+   "id": "auto_assembly",
+   "name": "Automotive assembly",
+   "unlock": 1970,
+   "kind": "process",
+   "sector": 6,
+   "cost": 7500000,
+   "months": 30,
+   "va": 1000000,
+   "margin": 0.1,
+   "fdi": true,
+   "jobs": 4000,
+   "requires": {
+    "mys": 3,
+    "elec": 0.3,
+    "road": 2,
+    "port": 1
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.08,
+    "hours": 4
+   }
+  },
+  {
+   "id": "electronics",
+   "name": "Electronics manufacturing",
+   "unlock": 1985,
+   "kind": "process",
+   "sector": 6,
+   "cost": 10000000,
+   "months": 30,
+   "va": 1500000,
+   "margin": 0.15,
+   "fdi": true,
+   "jobs": 8000,
+   "requires": {
+    "mys": 3.5,
+    "elec": 0.5,
+    "port": 2
+   },
+   "needs": [],
+   "link": {
+    "sector": 6,
+    "strength": 0.1,
+    "hours": 4
+   },
+   "tfp": [
+    [
+     6,
+     0.001
+    ]
+   ]
+  },
+  {
+   "id": "satellite",
+   "name": "Telecom satellite & ground network",
+   "unlock": 1976,
+   "kind": "service",
+   "sector": 8,
+   "cost": 15000000,
+   "months": 36,
+   "va": 200000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 500,
+   "requires": {
+    "mys": 4,
+    "elec": 0.4
+   },
+   "needs": [],
+   "tfp": [
+    [
+     8,
+     0.008
+    ],
+    [
+     9,
+     0.006
+    ],
+    [
+     6,
+     0.003
+    ]
+   ]
+  },
+  {
+   "id": "hydro_dam",
+   "name": "Hydroelectric dam",
+   "unlock": 1950,
+   "kind": "power",
+   "sector": 7,
+   "cost": 20000000,
+   "months": 60,
+   "va": 400000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 800,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "hydro"
+   ],
+   "power": {
+    "boost": 0.3,
+    "hours": 5
+   }
+  },
+  {
+   "id": "coal_plant",
+   "name": "Coal power plant",
+   "unlock": 1950,
+   "kind": "power",
+   "sector": 7,
+   "cost": 12500000,
+   "months": 36,
+   "va": 350000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 600,
+   "requires": {},
+   "needs": [
+    "coal"
+   ],
+   "power": {
+    "boost": 0.28,
+    "hours": 5
+   }
+  },
+  {
+   "id": "geothermal_plant",
+   "name": "Geothermal power plant",
+   "unlock": 1960,
+   "kind": "power",
+   "sector": 7,
+   "cost": 10000000,
+   "months": 36,
+   "va": 250000,
+   "margin": 0.2,
+   "fdi": true,
+   "jobs": 400,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "geothermal"
+   ],
+   "power": {
+    "boost": 0.15,
+    "hours": 4
+   }
+  },
+  {
+   "id": "oil_field",
+   "name": "Oil field development",
+   "unlock": 1950,
+   "kind": "extract",
+   "sector": 5,
+   "cost": 7500000,
+   "months": 30,
+   "va": 2000000,
+   "margin": 0.5,
+   "fdi": true,
+   "jobs": 800,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "oil"
+   ],
+   "peak": 12,
+   "decay": 20
+  },
+  {
+   "id": "gas_field",
+   "name": "Gas field development",
+   "unlock": 1960,
+   "kind": "extract",
+   "sector": 5,
+   "cost": 10000000,
+   "months": 36,
+   "va": 2400000,
+   "margin": 0.45,
+   "fdi": true,
+   "jobs": 500,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "gas"
+   ],
+   "peak": 20,
+   "decay": 25
+  },
+  {
+   "id": "coal_mine",
+   "name": "Coal mine",
+   "unlock": 1950,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 2500000,
+   "months": 24,
+   "va": 500000,
+   "margin": 0.3,
+   "fdi": true,
+   "jobs": 2500,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "coal"
+   ],
+   "peak": 40,
+   "decay": 80
+  },
+  {
+   "id": "nickel_mine",
+   "name": "Nickel mine",
+   "unlock": 1960,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 3750000,
+   "months": 30,
+   "va": 700000,
+   "margin": 0.3,
+   "fdi": true,
+   "jobs": 2000,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "nickel"
+   ],
+   "peak": 50,
+   "decay": 100
+  },
+  {
+   "id": "copper_mine",
+   "name": "Copper & gold mine",
+   "unlock": 1960,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 10000000,
+   "months": 42,
+   "va": 1800000,
+   "margin": 0.4,
+   "fdi": true,
+   "jobs": 3000,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "copper"
+   ],
+   "peak": 40,
+   "decay": 60
+  },
+  {
+   "id": "bauxite_mine",
+   "name": "Bauxite mine",
+   "unlock": 1950,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 2000000,
+   "months": 24,
+   "va": 300000,
+   "margin": 0.25,
+   "fdi": true,
+   "jobs": 1000,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "bauxite"
+   ],
+   "peak": 40,
+   "decay": 80
+  },
+  {
+   "id": "gold_mine",
+   "name": "Gold mine",
+   "unlock": 1950,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 2500000,
+   "months": 30,
+   "va": 600000,
+   "margin": 0.35,
+   "fdi": true,
+   "jobs": 1500,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "gold"
+   ],
+   "peak": 25,
+   "decay": 40
+  },
+  {
+   "id": "tin_mine",
+   "name": "Tin mine",
+   "unlock": 1950,
+   "kind": "extract",
+   "sector": 4,
+   "cost": 1500000,
+   "months": 24,
+   "va": 350000,
+   "margin": 0.25,
+   "fdi": true,
+   "jobs": 2500,
+   "requires": {},
+   "needs": [],
+   "resource": [
+    "tin"
+   ],
+   "peak": 30,
+   "decay": 50
+  }
+ ],
+ "partners": [
+  {
+   "id": "legacy",
+   "name": "Legacy debts (RIS / Round Table Conference)",
+   "bloc": 0,
+   "from": 1950,
+   "to": 2100,
+   "capGdp": 0,
+   "rate": 0.03,
+   "grace": 0,
+   "maturity": 50,
+   "tied": 0,
+   "conditional": false,
+   "grant": false,
+   "width": 9
+  },
+  {
+   "id": "us",
+   "name": "United States (Ex-Im, USAID)",
+   "bloc": -0.8,
+   "from": 1950,
+   "to": 2100,
+   "capGdp": 0.0035,
+   "rate": 0.025,
+   "grace": 5,
+   "maturity": 30,
+   "tied": 0.15,
+   "conditional": true,
+   "grant": false,
+   "width": 1.0
+  },
+  {
+   "id": "wb",
+   "name": "World Bank (IBRD / IDA)",
+   "bloc": -0.35,
+   "from": 1954,
+   "to": 2100,
+   "capGdp": 0.0035,
+   "rate": 0.02,
+   "grace": 8,
+   "maturity": 35,
+   "tied": 0.0,
+   "conditional": true,
+   "grant": false,
+   "width": 1.1
+  },
+  {
+   "id": "japan_rep",
+   "name": "Japan (war reparations, grant-aid)",
+   "bloc": -0.6,
+   "from": 1958,
+   "to": 1970,
+   "capGdp": 0.0025,
+   "rate": 0.0,
+   "grace": 0,
+   "maturity": 1,
+   "tied": 0.3,
+   "conditional": false,
+   "grant": true,
+   "width": 1.4
+  },
+  {
+   "id": "adb",
+   "name": "Asian Development Bank",
+   "bloc": -0.4,
+   "from": 1966,
+   "to": 2100,
+   "capGdp": 0.0025,
+   "rate": 0.025,
+   "grace": 6,
+   "maturity": 30,
+   "tied": 0.0,
+   "conditional": true,
+   "grant": false,
+   "width": 1.1
+  },
+  {
+   "id": "iggi",
+   "name": "IGGI / CGI consortium",
+   "bloc": -0.5,
+   "from": 1967,
+   "to": 2100,
+   "capGdp": 0.006,
+   "rate": 0.02,
+   "grace": 7,
+   "maturity": 30,
+   "tied": 0.05,
+   "conditional": true,
+   "grant": false,
+   "width": 1.2
+  },
+  {
+   "id": "japan_oda",
+   "name": "Japan (ODA yen loans)",
+   "bloc": -0.4,
+   "from": 1970,
+   "to": 2100,
+   "capGdp": 0.004,
+   "rate": 0.02,
+   "grace": 10,
+   "maturity": 30,
+   "tied": 0.25,
+   "conditional": false,
+   "grant": false,
+   "width": 1.2
+  },
+  {
+   "id": "ussr",
+   "name": "Soviet Union",
+   "bloc": 1.0,
+   "from": 1956,
+   "to": 1991,
+   "capGdp": 0.005,
+   "rate": 0.02,
+   "grace": 3,
+   "maturity": 12,
+   "tied": 0.3,
+   "conditional": false,
+   "grant": false,
+   "width": 1.0
+  },
+  {
+   "id": "eeurope",
+   "name": "Eastern Europe (Czechoslovakia, Poland, Yugoslavia\u2026)",
+   "bloc": 0.7,
+   "from": 1955,
+   "to": 1991,
+   "capGdp": 0.002,
+   "rate": 0.025,
+   "grace": 3,
+   "maturity": 12,
+   "tied": 0.3,
+   "conditional": false,
+   "grant": false,
+   "width": 1.0
+  },
+  {
+   "id": "china",
+   "name": "China (policy-bank loans)",
+   "bloc": 0.6,
+   "from": 2000,
+   "to": 2100,
+   "capGdp": 0.004,
+   "rate": 0.03,
+   "grace": 5,
+   "maturity": 20,
+   "tied": 0.4,
+   "conditional": false,
+   "grant": false,
+   "width": 1.5
+  }
+ ],
+ "capacity": {
+  "sizeDivisor": 3,
+  "seededScale": {
+   "small": 0.25,
+   "medium": 0.5,
+   "large": 1.0
+  }
+ },
+ "resourceType": {
+  "oil": "oil_field",
+  "gas": "gas_field",
+  "coal": "coal_mine",
+  "nickel": "nickel_mine",
+  "copper": "copper_mine",
+  "bauxite": "bauxite_mine",
+  "gold": "gold_mine",
+  "tin": "tin_mine",
+  "geothermal": "geothermal_plant",
+  "hydro": "hydro_dam"
+ },
+ "needsAlways": [
+  "oil",
+  "coal",
+  "tin"
+ ],
+ "needsIndustry": {
+  "gas": [
+   "gas_field"
+  ],
+  "hydro": [
+   "hydro_dam"
+  ],
+  "nickel": [
+   "nickel_mine"
+  ],
+  "copper": [
+   "copper_mine"
+  ]
+ },
+ "portHops": 2,
+ "roadStationCounts": true,
+ "utilisation": {
+  "base": 0.35,
+  "missingInputFactor": 0.5,
+  "governanceExponent": 0.5,
+  "stabilityBelow": 55,
+  "stabilityPenalty": 0.4,
+  "linkRange": [
+   0.5,
+   1.3
+  ]
+ },
+ "price": {
+  "oil": [
+   [
+    1950,
+    0.45
+   ],
+   [
+    1973,
+    0.5
+   ],
+   [
+    1974,
+    1.4
+   ],
+   [
+    1979,
+    1.5
+   ],
+   [
+    1981,
+    2.2
+   ],
+   [
+    1986,
+    0.8
+   ],
+   [
+    1999,
+    0.7
+   ],
+   [
+    2008,
+    2.3
+   ],
+   [
+    2014,
+    2.4
+   ],
+   [
+    2016,
+    1.1
+   ],
+   [
+    2022,
+    2.0
+   ],
+   [
+    2026,
+    1.5
+   ],
+   [
+    2050,
+    1.5
+   ]
+  ],
+  "commodity": [
+   [
+    1950,
+    0.8
+   ],
+   [
+    1970,
+    0.7
+   ],
+   [
+    1974,
+    1.0
+   ],
+   [
+    1986,
+    0.75
+   ],
+   [
+    2003,
+    0.8
+   ],
+   [
+    2011,
+    1.7
+   ],
+   [
+    2016,
+    1.0
+   ],
+   [
+    2021,
+    1.5
+   ],
+   [
+    2026,
+    1.2
+   ],
+   [
+    2050,
+    1.2
+   ]
+  ],
+  "oilTrend": [
+   [
+    1950,
+    0.5
+   ],
+   [
+    2026,
+    1.3
+   ],
+   [
+    2050,
+    1.5
+   ]
+  ],
+  "commodityTrend": [
+   [
+    1950,
+    0.8
+   ],
+   [
+    2026,
+    1.1
+   ],
+   [
+    2050,
+    1.2
+   ]
+  ]
+ },
+ "state": {
+  "efficiencyExponent": 0.5,
+  "overrunUsesGovernance": true,
+  "profitToBudget": 1.0,
+  "holidayTaxRate": 0.25
+ },
+ "fdi": {
+  "openLawYear": 1958,
+  "oilGasOpenYear": 1960,
+  "minClimate": 40,
+  "lawClimateBonus": 12,
+  "offers": [
+   {
+    "id": "turnkey",
+    "name": "Turnkey concession",
+    "foreign": 1.0,
+    "holiday": 10,
+    "local": 0.15,
+    "divestTo": 1.0,
+    "divestYears": 0,
+    "minClimate": 40
+   },
+   {
+    "id": "jv",
+    "name": "Joint venture (foreign majority)",
+    "foreign": 0.7,
+    "holiday": 5,
+    "local": 0.35,
+    "divestTo": 0.49,
+    "divestYears": 15,
+    "minClimate": 55
+   },
+   {
+    "id": "bot",
+    "name": "Build\u2013operate\u2013transfer",
+    "foreign": 1.0,
+    "holiday": 8,
+    "local": 0.3,
+    "divestTo": 0.0,
+    "divestYears": 20,
+    "minClimate": 70
+   }
+  ],
+  "climateSweetener": {
+   "per": 10,
+   "foreignDrop": 0.05,
+   "holidayDrop": 1
+  },
+  "westernFactorSlope": 1.0,
+  "easternBlocked": 0.3,
+  "localContentLinkBoost": 1.0,
+  "techTransferPerLocal": 0.5,
+  "nationalismStabilityPerGdp": 40,
+  "repatriationShare": 0.7
+ },
+ "aid": {
+  "tiedCostPremiumScale": 1.0,
+  "conditionStabilityHit": 1.2,
+  "conditionClimateBonus": 2,
+  "program": {
+   "maxShareOfCapacity": 1.0
+  }
+ },
+ "alignment": {
+  "movePerMonth": 0.04,
+  "start": 0.0,
+  "westernFdiPenaltyEast": 1.2,
+  "commonFloor": 0.15
+ },
+ "climate": {
+  "base": 42,
+  "governance": 22,
+  "stability": 22,
+  "inflation": 18,
+  "inflationScale": 0.5,
+  "deficitRule": 6,
+  "law": 12,
+  "openness": 8,
+  "nationalization": 25,
+  "nationalizationHalfLifeYears": 8,
+  "debtStress": 10,
+  "adjustPerMonth": 0.08,
+  "savingsEffect": 0.12,
+  "infrastructure": 6
+ },
+ "nationalize": {
+  "compensationYears": 2.0,
+  "minClimateDrop": 1.0,
+  "stabilityGain": 0.3
+ },
+ "privatize": {
+  "profitMultiple": 6.0,
+  "climateFactor": 0.5
+ },
+ "exploration": {
+  "costPerSizeRp": 1200000000000.0,
+  "windowYears": 45,
+  "revealNote": true,
+  "minYear": 1950
+ },
+ "extraction": {
+  "sizeCostExponent": 1.0
+ },
+ "debt": {
+  "stressServiceOverRevenue": 0.35,
+  "crisisServiceOverRevenue": 0.5
+ },
+ "powerLogit": 3.0
+}

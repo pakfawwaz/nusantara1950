@@ -1,0 +1,177 @@
+{
+ "_note": "Fiscal parameters: operating costs of government units, tax system, transfers and the default APBN. Rp per year, constant 2026 prices.",
+ "opCost": {
+  "kecamatanFixed": 800000000.0,
+  "kecamatanPerCapita": 8000,
+  "kecamatanPerKm2": 300000.0,
+  "regencyFixed": 20000000000.0,
+  "regencyPerCapita": 6000,
+  "regencyPerKm2": 0,
+  "provinceFixed": 120000000000.0,
+  "provincePerCapita": 2000,
+  "wageIndexExponent": 0.9,
+  "kecamatanRemoteness": [
+   [
+    0,
+    2.0
+   ],
+   [
+    10,
+    1.6
+   ],
+   [
+    60,
+    1.2
+   ],
+   [
+    300,
+    1.0
+   ],
+   [
+    1500,
+    0.9
+   ]
+  ]
+ },
+ "tax": {
+  "pph": 0.34,
+  "ppn": 0.12,
+  "ppnBaseShare": 0.7,
+  "vatUnlockYear": 1983,
+  "salesTaxCompliance": 0.65,
+  "vatCompliance": 1.0,
+  "excise": 0.06,
+  "customs": 0.08,
+  "importOverGdp": 0.12,
+  "royaltyRate": 0.04,
+  "royaltySectors": [
+   3,
+   4
+  ],
+  "oilGovShare": [
+   [
+    1950,
+    0.3
+   ],
+   [
+    1966,
+    0.6
+   ],
+   [
+    1990,
+    0.7
+   ]
+  ],
+  "pad": 0.02,
+  "padSplitProvince": 0.3,
+  "complianceBase": 0.6,
+  "formalizationPerLnIncome": 0.04,
+  "formalMax": 0.97,
+  "limits": {
+   "pph": [
+    0.1,
+    0.6
+   ],
+   "ppn": [
+    0.05,
+    0.25
+   ],
+   "excise": [
+    0.0,
+    0.15
+   ],
+   "customs": [
+    0.0,
+    0.25
+   ]
+  },
+  "avoidanceElasticity": 0.7,
+  "refRates": {
+   "pph": 0.34,
+   "ppn": 0.12,
+   "excise": 0.06,
+   "customs": 0.08
+  }
+ },
+ "transfers": {
+  "dauShareOfDomesticRevenue": 0.26,
+  "dauProvinceShare": 0.1,
+  "dbhOil": 0.15,
+  "dbhMining": 0.8,
+  "dbhForestry": 0.8,
+  "dauPerCapitaFloor": 0.3,
+  "basketPerCapitaOverIncome": 0.04,
+  "basketProvincePerCapitaOverIncome": 0.01
+ },
+ "defaultBudgetPctGdp": {
+  "centralOps": 1.0,
+  "defense": 1.0,
+  "education": 0.8,
+  "health": 0.4,
+  "infra": 1.0,
+  "subsidies": 0.4,
+  "dak": 0.15,
+  "rnd": 0.05,
+  "kb": 0.0,
+  "transmigration": 0.0,
+  "maintenance": 0.09,
+  "exploration": 0.0
+ },
+ "minimumRequiredPctGdp": {
+  "centralOps": 1.0,
+  "defense": 0.5
+ },
+ "categoryUnlockYear": {
+  "kb": 1968
+ },
+ "devPresets": {
+  "balanced": [
+   0.25,
+   0.2,
+   0.3,
+   0.25
+  ],
+  "education": [
+   0.55,
+   0.15,
+   0.15,
+   0.15
+  ],
+  "health": [
+   0.15,
+   0.55,
+   0.15,
+   0.15
+  ],
+  "infrastructure": [
+   0.15,
+   0.1,
+   0.6,
+   0.15
+  ],
+  "agriculture": [
+   0.15,
+   0.1,
+   0.2,
+   0.55
+  ]
+ },
+ "deficitRule": {
+  "cap": 0.03
+ },
+ "central": {
+  "agriShareOfSubsidy": 0.25
+ },
+ "discretionary": [
+  "education",
+  "health",
+  "infra",
+  "subsidies",
+  "dak",
+  "rnd",
+  "kb",
+  "transmigration",
+  "maintenance",
+  "exploration"
+ ]
+}

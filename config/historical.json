@@ -1,0 +1,4 @@
+{
+  "_note": "APPROXIMATE ghost line shown in Statistics: real GDP per capita of actual Indonesia as an index (1950 = 1.00), rounded from the shape of Maddison-project / BPS style long series (stagnation 1960-66, oil boom 1973-81, growth to 1997, 1998 crash, recovery). It is a visual guide, not an official series. 2027+ extrapolated at ~3 %/yr.",
+  "gdpPerCapitaIndex": [[1950,1.00],[1955,1.08],[1960,1.14],[1965,1.17],[1970,1.40],[1975,1.95],[1980,2.55],[1985,2.95],[1990,3.55],[1995,4.55],[1997,4.95],[1998,4.25],[2000,4.45],[2005,5.25],[2010,6.30],[2015,7.40],[2019,8.10],[2020,7.85],[2021,8.00],[2023,8.55],[2026,9.00],[2030,10.1],[2040,13.5],[2050,18.0]]
+}

@@ -1,0 +1,336 @@
+modern_code,modern_name,parent_code,parent_name,year_formed,confidence
+11.01,Kabupaten Aceh Selatan,11.01,Kabupaten Aceh Selatan,0,root
+11.02,Kabupaten Aceh Tenggara,11.04,Kabupaten Aceh Tengah,1974,med
+11.03,Kabupaten Aceh Timur,11.03,Kabupaten Aceh Timur,0,root
+11.05,Kabupaten Aceh Barat,11.05,Kabupaten Aceh Barat,0,root
+11.06,Kabupaten Aceh Besar,11.06,Kabupaten Aceh Besar,0,root
+11.07,Kabupaten Pidie,11.07,Kabupaten Pidie,0,root
+11.08,Kabupaten Aceh Utara,11.08,Kabupaten Aceh Utara,0,root
+11.09,Kabupaten Simeulue,11.05,Kabupaten Aceh Barat,1999,high
+11.10,Kabupaten Aceh Singkil,11.01,Kabupaten Aceh Selatan,1999,high
+11.11,Kabupaten Bireuen,11.08,Kabupaten Aceh Utara,1999,high
+11.12,Kabupaten Aceh Barat Daya,11.01,Kabupaten Aceh Selatan,2002,high
+11.13,Kabupaten Gayo Lues,11.04,Kabupaten Aceh Tengah,2002,high
+11.14,Kabupaten Aceh Jaya,11.05,Kabupaten Aceh Barat,2002,high
+11.15,Kabupaten Nagan Raya,11.05,Kabupaten Aceh Barat,2002,high
+11.16,Kabupaten Aceh Tamiang,11.03,Kabupaten Aceh Timur,2002,high
+11.17,Kabupaten Bener Meriah,11.04,Kabupaten Aceh Tengah,2003,high
+11.18,Kabupaten Pidie Jaya,11.07,Kabupaten Pidie,2007,high
+11.71,Kota Banda Aceh,11.06,Kabupaten Aceh Besar,1956,med
+11.72,Kota Sabang,11.06,Kabupaten Aceh Besar,1965,med
+11.73,Kota Lhokseumawe,11.08,Kabupaten Aceh Utara,1999,high
+11.74,Kota Langsa,11.03,Kabupaten Aceh Timur,1999,high
+11.75,Kota Subulussalam,11.01,Kabupaten Aceh Selatan,2007,high
+12.01,Kabupaten Tapanuli Tengah,12.01,Kabupaten Tapanuli Tengah,0,root
+12.02,Kabupaten Tapanuli Utara,12.02,Kabupaten Tapanuli Utara,0,root
+12.03,Kabupaten Tapanuli Selatan,12.03,Kabupaten Tapanuli Selatan,0,root
+12.04,Kabupaten Nias,12.04,Kabupaten Nias,0,root
+12.05,Kabupaten Langkat,12.05,Kabupaten Langkat,0,root
+12.06,Kabupaten Karo,12.06,Kabupaten Karo,0,root
+12.07,Kabupaten Deli Serdang,12.07,Kabupaten Deli Serdang,0,root
+12.08,Kabupaten Simalungun,12.08,Kabupaten Simalungun,0,root
+12.09,Kabupaten Asahan,12.09,Kabupaten Asahan,0,root
+12.10,Kabupaten Labuhanbatu,12.10,Kabupaten Labuhanbatu,0,root
+12.11,Kabupaten Dairi,12.11,Kabupaten Dairi,0,root
+12.12,Kabupaten Toba,12.02,Kabupaten Tapanuli Utara,1998,high
+12.13,Kabupaten Mandailing Natal,12.03,Kabupaten Tapanuli Selatan,1998,high
+12.14,Kabupaten Nias Selatan,12.04,Kabupaten Nias,1998,high
+12.15,Kabupaten Pakpak Bharat,12.11,Kabupaten Dairi,2003,high
+12.16,Kabupaten Humbang Hasundutan,12.02,Kabupaten Tapanuli Utara,2003,high
+12.17,Kabupaten Samosir,12.02,Kabupaten Tapanuli Utara,2003,high
+12.18,Kabupaten Serdang Bedagai,12.07,Kabupaten Deli Serdang,2003,high
+12.19,Kabupaten Batu Bara,12.09,Kabupaten Asahan,2007,high
+12.20,Kabupaten Padang Lawas Utara,12.03,Kabupaten Tapanuli Selatan,2007,high
+12.21,Kabupaten Padang Lawas,12.03,Kabupaten Tapanuli Selatan,2007,high
+12.22,Kabupaten Labuhanbatu Selatan,12.10,Kabupaten Labuhanbatu,2008,high
+12.23,Kabupaten Labuhanbatu Utara,12.10,Kabupaten Labuhanbatu,2008,high
+12.24,Kabupaten Nias Utara,12.04,Kabupaten Nias,2008,high
+12.25,Kabupaten Nias Barat,12.04,Kabupaten Nias,2008,high
+12.73,Kota Sibolga,12.01,Kabupaten Tapanuli Tengah,1956,med
+12.74,Kota Tanjungbalai,12.09,Kabupaten Asahan,1956,med
+12.75,Kota Binjai,12.05,Kabupaten Langkat,1956,med
+12.76,Kota Tebing Tinggi,12.07,Kabupaten Deli Serdang,1956,med
+12.77,Kota Padangsidimpuan,12.03,Kabupaten Tapanuli Selatan,1956,med
+12.78,Kota Gunungsitoli,12.04,Kabupaten Nias,2008,high
+13.01,Kabupaten Pesisir Selatan,13.01,Kabupaten Pesisir Selatan,0,root
+13.02,Kabupaten Solok,13.02,Kabupaten Solok,0,root
+13.03,Kabupaten Sijunjung,13.03,Kabupaten Sijunjung,0,root
+13.04,Kabupaten Tanah Datar,13.04,Kabupaten Tanah Datar,0,root
+13.05,Kabupaten Padang Pariaman,13.05,Kabupaten Padang Pariaman,0,root
+13.06,Kabupaten Agam,13.06,Kabupaten Agam,0,root
+13.07,Kabupaten Lima Puluh Kota,13.07,Kabupaten Lima Puluh Kota,0,root
+13.08,Kabupaten Pasaman,13.08,Kabupaten Pasaman,0,root
+13.09,Kabupaten Kepulauan Mentawai,13.05,Kabupaten Padang Pariaman,1999,high
+13.10,Kabupaten Dharmasraya,13.03,Kabupaten Sijunjung,2003,high
+13.11,Kabupaten Solok Selatan,13.02,Kabupaten Solok,2003,high
+13.12,Kabupaten Pasaman Barat,13.08,Kabupaten Pasaman,2003,high
+13.72,Kota Solok,13.02,Kabupaten Solok,1970,high
+13.73,Kota Sawahlunto,13.03,Kabupaten Sijunjung,1990,high
+13.74,Kota Padang Panjang,13.04,Kabupaten Tanah Datar,1956,med
+13.76,Kota Payakumbuh,13.07,Kabupaten Lima Puluh Kota,1970,high
+13.77,Kota Pariaman,13.05,Kabupaten Padang Pariaman,2002,high
+14.01,Kabupaten Kampar,14.01,Kabupaten Kampar,0,root
+14.02,Kabupaten Indragiri Hulu,14.02,Kabupaten Indragiri Hulu,0,root
+14.03,Kabupaten Bengkalis,14.03,Kabupaten Bengkalis,0,root
+14.04,Kabupaten Indragiri Hilir,14.02,Kabupaten Indragiri Hulu,1965,high
+14.05,Kabupaten Pelalawan,14.01,Kabupaten Kampar,1999,high
+14.06,Kabupaten Rokan Hulu,14.01,Kabupaten Kampar,1999,high
+14.07,Kabupaten Rokan Hilir,14.03,Kabupaten Bengkalis,1999,high
+14.08,Kabupaten Siak,14.03,Kabupaten Bengkalis,1999,high
+14.09,Kabupaten Kuantan Singingi,14.02,Kabupaten Indragiri Hulu,1999,high
+14.10,Kabupaten Kepulauan Meranti,14.03,Kabupaten Bengkalis,2008,high
+14.71,Kota Pekanbaru,14.01,Kabupaten Kampar,1956,med
+14.72,Kota Dumai,14.03,Kabupaten Bengkalis,1999,high
+15.01,Kabupaten Kerinci,13.01,Kabupaten Pesisir Selatan,1957,high
+15.02,Kabupaten Merangin,15.02,Kabupaten Merangin,0,root
+15.03,Kabupaten Sarolangun,15.02,Kabupaten Merangin,1999,high
+15.04,Kabupaten Batanghari,15.04,Kabupaten Batanghari,0,root
+15.05,Kabupaten Muaro Jambi,15.04,Kabupaten Batanghari,1999,high
+15.06,Kabupaten Tanjung Jabung Barat,15.04,Kabupaten Batanghari,1965,high
+15.07,Kabupaten Tanjung Jabung Timur,15.04,Kabupaten Batanghari,1965,high
+15.08,Kabupaten Bungo,15.02,Kabupaten Merangin,1965,med
+15.09,Kabupaten Tebo,15.02,Kabupaten Merangin,1965,med
+15.71,Kota Jambi,15.04,Kabupaten Batanghari,1956,med
+15.72,Kota Sungai Penuh,13.01,Kabupaten Pesisir Selatan,1957,med
+16.01,Kabupaten Ogan Komering Ulu,16.01,Kabupaten Ogan Komering Ulu,0,root
+16.02,Kabupaten Ogan Komering Ilir,16.02,Kabupaten Ogan Komering Ilir,0,root
+16.03,Kabupaten Muara Enim,16.03,Kabupaten Muara Enim,0,root
+16.04,Kabupaten Lahat,16.04,Kabupaten Lahat,0,root
+16.05,Kabupaten Musi Rawas,16.05,Kabupaten Musi Rawas,0,root
+16.06,Kabupaten Musi Banyuasin,16.06,Kabupaten Musi Banyuasin,0,root
+16.07,Kabupaten Banyuasin,16.06,Kabupaten Musi Banyuasin,2002,high
+16.08,Kabupaten Ogan Komering Ulu Timur,16.01,Kabupaten Ogan Komering Ulu,2003,high
+16.09,Kabupaten Ogan Komering Ulu Selatan,16.01,Kabupaten Ogan Komering Ulu,2003,high
+16.10,Kabupaten Ogan Ilir,16.02,Kabupaten Ogan Komering Ilir,2003,high
+16.11,Kabupaten Empat Lawang,16.04,Kabupaten Lahat,2007,high
+16.12,Kabupaten Penukal Abab Lematang Ilir,16.03,Kabupaten Muara Enim,2013,high
+16.13,Kabupaten Musi Rawas Utara,16.05,Kabupaten Musi Rawas,2013,high
+16.71,Kota Palembang,16.71,Kota Palembang,0,root
+16.72,Kota Pagar Alam,16.04,Kabupaten Lahat,2001,high
+16.73,Kota Lubuk Linggau,16.05,Kabupaten Musi Rawas,2001,high
+16.74,Kota Prabumulih,16.03,Kabupaten Muara Enim,2001,high
+17.01,Kabupaten Bengkulu Selatan,17.01,Kabupaten Bengkulu Selatan,0,root
+17.02,Kabupaten Rejang Lebong,17.02,Kabupaten Rejang Lebong,0,root
+17.03,Kabupaten Bengkulu Utara,17.03,Kabupaten Bengkulu Utara,0,root
+17.04,Kabupaten Kaur,17.01,Kabupaten Bengkulu Selatan,2003,high
+17.05,Kabupaten Seluma,17.01,Kabupaten Bengkulu Selatan,2003,high
+17.06,Kabupaten Mukomuko,17.03,Kabupaten Bengkulu Utara,2003,high
+17.07,Kabupaten Lebong,17.02,Kabupaten Rejang Lebong,2003,high
+17.08,Kabupaten Kepahiang,17.02,Kabupaten Rejang Lebong,2003,high
+17.09,Kabupaten Bengkulu Tengah,17.03,Kabupaten Bengkulu Utara,2008,high
+17.71,Kota Bengkulu,17.03,Kabupaten Bengkulu Utara,1956,med
+18.01,Kabupaten Lampung Selatan,18.01,Kabupaten Lampung Selatan,0,root
+18.02,Kabupaten Lampung Tengah,18.02,Kabupaten Lampung Tengah,0,root
+18.03,Kabupaten Lampung Utara,18.03,Kabupaten Lampung Utara,0,root
+18.04,Kabupaten Lampung Barat,18.03,Kabupaten Lampung Utara,1991,high
+18.05,Kabupaten Tulang Bawang,18.03,Kabupaten Lampung Utara,1997,high
+18.06,Kabupaten Tanggamus,18.01,Kabupaten Lampung Selatan,1997,high
+18.07,Kabupaten Lampung Timur,18.02,Kabupaten Lampung Tengah,1999,high
+18.08,Kabupaten Way Kanan,18.03,Kabupaten Lampung Utara,1999,high
+18.09,Kabupaten Pesawaran,18.01,Kabupaten Lampung Selatan,2007,high
+18.10,Kabupaten Pringsewu,18.01,Kabupaten Lampung Selatan,2008,high
+18.11,Kabupaten Mesuji,18.03,Kabupaten Lampung Utara,2008,high
+18.12,Kabupaten Tulang Bawang Barat,18.03,Kabupaten Lampung Utara,2008,high
+18.13,Kabupaten Pesisir Barat,18.03,Kabupaten Lampung Utara,2012,high
+18.71,Kota Bandar Lampung,18.01,Kabupaten Lampung Selatan,1956,med
+18.72,Kota Metro,18.02,Kabupaten Lampung Tengah,1999,high
+19.01,Kabupaten Bangka,19.01,Kabupaten Bangka,0,root
+19.02,Kabupaten Belitung,19.02,Kabupaten Belitung,0,root
+19.03,Kabupaten Bangka Selatan,19.01,Kabupaten Bangka,2003,high
+19.04,Kabupaten Bangka Tengah,19.01,Kabupaten Bangka,2003,high
+19.05,Kabupaten Bangka Barat,19.01,Kabupaten Bangka,2003,high
+19.06,Kabupaten Belitung Timur,19.02,Kabupaten Belitung,2003,high
+19.71,Kota Pangkal Pinang,19.01,Kabupaten Bangka,1956,med
+21.01,Kabupaten Bintan,21.01,Kabupaten Bintan,0,root
+21.02,Kabupaten Karimun,21.01,Kabupaten Bintan,1999,med
+21.03,Kabupaten Natuna,21.01,Kabupaten Bintan,1999,med
+21.04,Kabupaten Lingga,21.01,Kabupaten Bintan,2003,med
+21.05,Kabupaten Kepulauan Anambas,21.01,Kabupaten Bintan,2008,med
+21.71,Kota Batam,21.01,Kabupaten Bintan,1999,med
+21.72,Kota Tanjung Pinang,21.01,Kabupaten Bintan,2001,med
+31.01,Kabupaten Administrasi Kepulauan Seribu,31.71,Kota Administrasi Jakarta Pusat,0,med
+31.71,Kota Administrasi Jakarta Pusat,31.71,Kota Administrasi Jakarta Pusat,0,root
+31.72,Kota Administrasi Jakarta Utara ,31.71,Kota Administrasi Jakarta Pusat,0,med
+31.73,Kota Administrasi Jakarta Barat,31.71,Kota Administrasi Jakarta Pusat,0,med
+31.74,Kota Administrasi Jakarta Selatan,31.71,Kota Administrasi Jakarta Pusat,0,med
+31.75,Kota Administrasi Jakarta Timur,31.71,Kota Administrasi Jakarta Pusat,0,med
+32.01,Kabupaten Bogor,32.01,Kabupaten Bogor,0,root
+32.02,Kabupaten Sukabumi,32.02,Kabupaten Sukabumi,0,root
+32.03,Kabupaten Cianjur,32.03,Kabupaten Cianjur,0,root
+32.04,Kabupaten Bandung,32.04,Kabupaten Bandung,0,root
+32.05,Kabupaten Garut,32.05,Kabupaten Garut,0,root
+32.06,Kabupaten Tasikmalaya,32.06,Kabupaten Tasikmalaya,0,root
+32.07,Kabupaten Ciamis,32.07,Kabupaten Ciamis,0,root
+32.08,Kabupaten Kuningan,32.08,Kabupaten Kuningan,0,root
+32.09,Kabupaten Cirebon,32.09,Kabupaten Cirebon,0,root
+32.10,Kabupaten Majalengka,32.10,Kabupaten Majalengka,0,root
+32.11,Kabupaten Sumedang,32.11,Kabupaten Sumedang,0,root
+32.12,Kabupaten Indramayu,32.12,Kabupaten Indramayu,0,root
+32.13,Kabupaten Subang,32.13,Kabupaten Subang,0,root
+32.14,Kabupaten Purwakarta,32.14,Kabupaten Purwakarta,0,root
+32.15,Kabupaten Karawang,32.15,Kabupaten Karawang,0,root
+32.16,Kabupaten Bekasi,32.16,Kabupaten Bekasi,1950,med
+32.17,Kabupaten Bandung Barat,32.04,Kabupaten Bandung,2007,high
+32.18,Kabupaten Pangandaran,32.07,Kabupaten Ciamis,2012,high
+32.71,Kota Bogor,32.71,Kota Bogor,0,root
+32.72,Kota Sukabumi,32.72,Kota Sukabumi,0,root
+32.73,Kota Bandung,32.73,Kota Bandung,0,root
+32.74,Kota Cirebon,32.74,Kota Cirebon,0,root
+32.75,Kota Bekasi,32.16,Kabupaten Bekasi,1996,high
+32.76,Kota Depok,32.01,Kabupaten Bogor,1999,high
+32.77,Kota Cimahi,32.04,Kabupaten Bandung,2001,high
+32.78,Kota Tasikmalaya,32.06,Kabupaten Tasikmalaya,2001,high
+32.79,Kota Banjar,32.07,Kabupaten Ciamis,2002,high
+35.79,Kota Batu,35.07,Kabupaten Malang,2001,high
+36.01,Kabupaten Pandeglang,36.01,Kabupaten Pandeglang,0,root
+36.02,Kabupaten Lebak,36.02,Kabupaten Lebak,0,root
+36.03,Kabupaten Tangerang,36.03,Kabupaten Tangerang,0,root
+36.04,Kabupaten Serang,36.04,Kabupaten Serang,0,root
+36.71,Kota Tangerang,36.03,Kabupaten Tangerang,1993,high
+36.72,Kota Cilegon,36.04,Kabupaten Serang,1999,high
+36.73,Kota Serang,36.04,Kabupaten Serang,2007,high
+36.74,Kota Tangerang Selatan,36.03,Kabupaten Tangerang,2008,high
+51.71,Kota Denpasar,51.03,Kabupaten Badung,1992,high
+52.07,Kabupaten Sumbawa Barat,52.04,Kabupaten Sumbawa,2003,high
+52.08,Kabupaten Lombok Utara,52.01,Kabupaten Lombok Barat,2008,high
+52.71,Kota Mataram,52.01,Kabupaten Lombok Barat,1993,high
+52.72,Kota Bima,52.06,Kabupaten Bima,2002,high
+53.13,Kabupaten Lembata,53.06,Kabupaten Flores Timur,1999,high
+53.14,Kabupaten Rote Ndao,53.01,Kabupaten Kupang,2002,high
+53.15,Kabupaten Manggarai Barat,53.10,Kabupaten Manggarai,2003,high
+53.16,Kabupaten Nagekeo,53.09,Kabupaten Ngada,2007,high
+53.17,Kabupaten Sumba Tengah,53.12,Kabupaten Sumba Barat,2007,high
+53.18,Kabupaten Sumba Barat Daya,53.12,Kabupaten Sumba Barat,2007,high
+53.19,Kabupaten Manggarai Timur,53.10,Kabupaten Manggarai,2007,high
+53.20,Kabupaten Sabu Raijua,53.01,Kabupaten Kupang,2008,high
+53.21,Kabupaten Malaka,53.04,Kabupaten Belu,2012,high
+53.71,Kota Kupang,53.01,Kabupaten Kupang,1996,high
+61.07,Kabupaten Bengkayang,61.01,Kabupaten Sambas,1999,high
+61.08,Kabupaten Landak,61.02,Kabupaten Mempawah,1999,high
+61.09,Kabupaten Sekadau,61.03,Kabupaten Sanggau,2003,high
+61.10,Kabupaten Melawi,61.05,Kabupaten Sintang,2003,high
+61.11,Kabupaten Kayong Utara,61.04,Kabupaten Ketapang,2007,high
+61.12,Kabupaten Kubu Raya,61.02,Kabupaten Mempawah,2007,high
+61.72,Kota Singkawang,61.01,Kabupaten Sambas,2001,high
+62.02,Kabupaten Kotawaringin Timur,62.01,Kabupaten Kotawaringin Barat,1950,med
+62.06,Kabupaten Katingan,62.01,Kabupaten Kotawaringin Barat,2002,high
+62.07,Kabupaten Seruyan,62.01,Kabupaten Kotawaringin Barat,2002,high
+62.08,Kabupaten Sukamara,62.01,Kabupaten Kotawaringin Barat,2002,high
+62.09,Kabupaten Lamandau,62.01,Kabupaten Kotawaringin Barat,2002,high
+62.10,Kabupaten Gunung Mas,62.03,Kabupaten Kapuas,2002,high
+62.11,Kabupaten Pulang Pisau,62.03,Kabupaten Kapuas,2002,high
+62.12,Kabupaten Murung Raya,62.05,Kabupaten Barito Utara,2002,high
+62.13,Kabupaten Barito Timur,62.04,Kabupaten Barito Selatan,2002,high
+62.71,Kota Palangkaraya,62.03,Kabupaten Kapuas,1957,med
+63.05,Kabupaten Tapin,63.06,Kabupaten Hulu Sungai Selatan,1965,high
+63.09,Kabupaten Tabalong,63.08,Kabupaten Hulu Sungai Utara,1965,high
+63.10,Kabupaten Tanah Bumbu,63.02,Kabupaten Kotabaru,2003,high
+63.11,Kabupaten Balangan,63.08,Kabupaten Hulu Sungai Utara,2003,high
+63.72,Kota Banjarbaru,63.03,Kabupaten Banjar,1999,high
+64.07,Kabupaten Kutai Barat,64.02,Kabupaten Kutai Kartanegara,1999,high
+64.08,Kabupaten Kutai Timur,64.02,Kabupaten Kutai Kartanegara,1999,high
+64.09,Kabupaten Penajam Paser Utara,64.01,Kabupaten Paser,2002,high
+64.11,Kabupaten Mahakam Ulu,64.02,Kabupaten Kutai Kartanegara,2013,high
+64.71,Kota Balikpapan,64.02,Kabupaten Kutai Kartanegara,1960,med
+64.72,Kota Samarinda,64.02,Kabupaten Kutai Kartanegara,1960,high
+64.74,Kota Bontang,64.02,Kabupaten Kutai Kartanegara,1999,high
+65.02,Kabupaten Malinau,65.01,Kabupaten Bulungan,1999,high
+65.03,Kabupaten Nunukan,65.01,Kabupaten Bulungan,1999,high
+65.04,Kabupaten Tana Tidung,65.01,Kabupaten Bulungan,2007,high
+65.71,Kota Tarakan,65.01,Kabupaten Bulungan,1997,high
+71.04,Kabupaten Kepulauan Talaud,71.03,Kabupaten Kepulauan Sangihe,2000,high
+71.05,Kabupaten Minahasa Selatan,71.02,Kabupaten Minahasa,2003,high
+71.06,Kabupaten Minahasa Utara,71.02,Kabupaten Minahasa,2003,high
+71.07,Kabupaten Minahasa Tenggara,71.02,Kabupaten Minahasa,2007,high
+71.08,Kabupaten Bolaang Mongondow Utara,71.01,Kabupaten Bolaang Mongondow,2007,high
+71.09,Kabupaten Kep. Siau Tagulandang Biaro,71.03,Kabupaten Kepulauan Sangihe,2007,high
+71.10,Kabupaten Bolaang Mongondow Timur,71.01,Kabupaten Bolaang Mongondow,2008,high
+71.11,Kabupaten Bolaang Mongondow Selatan,71.01,Kabupaten Bolaang Mongondow,2008,high
+71.72,Kota Bitung,71.02,Kabupaten Minahasa,1990,high
+71.73,Kota Tomohon,71.02,Kabupaten Minahasa,2003,high
+71.74,Kota Kotamobagu,71.01,Kabupaten Bolaang Mongondow,2007,high
+72.05,Kabupaten Buol,72.04,Kabupaten Toli-Toli,1999,high
+72.06,Kabupaten Morowali,72.02,Kabupaten Poso,1999,high
+72.07,Kabupaten Banggai Kepulauan,72.01,Kabupaten Banggai,1999,high
+72.08,Kabupaten Parigi Moutong,72.03,Kabupaten Donggala,2002,high
+72.09,Kabupaten Tojo Una Una,72.02,Kabupaten Poso,2003,high
+72.10,Kabupaten Sigi,72.03,Kabupaten Donggala,2008,high
+72.11,Kabupaten Banggai Laut,72.01,Kabupaten Banggai,2013,high
+72.12,Kabupaten Morowali Utara,72.02,Kabupaten Poso,2013,high
+72.71,Kota Palu,72.03,Kabupaten Donggala,1978,high
+73.22,Kabupaten Luwu Utara,73.17,Kabupaten Luwu,1999,high
+73.24,Kabupaten Luwu Timur,73.17,Kabupaten Luwu,2003,high
+73.26,Kabupaten Toraja Utara,73.18,Kabupaten Tana Toraja,2008,high
+73.72,Kota Parepare,73.15,Kabupaten Pinrang,1960,low
+73.73,Kota Palopo,73.17,Kabupaten Luwu,2002,high
+74.05,Kabupaten Konawe Selatan,74.02,Kabupaten Konawe,1995,high
+74.06,Kabupaten Bombana,74.04,Kabupaten Buton,2003,high
+74.07,Kabupaten Wakatobi,74.04,Kabupaten Buton,2003,high
+74.08,Kabupaten Kolaka Utara,74.01,Kabupaten Kolaka,2003,high
+74.09,Kabupaten Konawe Utara,74.02,Kabupaten Konawe,2007,high
+74.10,Kabupaten Buton Utara,74.03,Kabupaten Muna,2007,high
+74.11,Kabupaten Kolaka Timur,74.01,Kabupaten Kolaka,2013,high
+74.12,Kabupaten Konawe Kepulauan,74.02,Kabupaten Konawe,2013,high
+74.13,Kabupaten Muna Barat,74.03,Kabupaten Muna,2014,high
+74.14,Kabupaten Buton Tengah,74.04,Kabupaten Buton,2014,high
+74.15,Kabupaten Buton Selatan,74.04,Kabupaten Buton,2014,high
+74.71,Kota Kendari,74.02,Kabupaten Konawe,1995,high
+74.72,Kota Bau Bau,74.04,Kabupaten Buton,2001,high
+75.02,Kabupaten Boalemo,75.01,Kabupaten Gorontalo,1999,high
+75.03,Kabupaten Bone Bolango,75.01,Kabupaten Gorontalo,2003,high
+75.04,Kabupaten Pohuwato,75.01,Kabupaten Gorontalo,2003,high
+75.05,Kabupaten Gorontalo Utara,75.01,Kabupaten Gorontalo,2007,high
+75.71,Kota Gorontalo,75.01,Kabupaten Gorontalo,2001,med
+76.01,Kabupaten Pasangkayu,76.02,Kabupaten Mamuju,2003,high
+76.03,Kabupaten Mamasa,76.04,Kabupaten Polewali Mandar,2002,high
+76.06,Kabupaten Mamuju Tengah,76.02,Kabupaten Mamuju,2012,high
+81.03,Kabupaten Kepulauan Tanimbar,81.02,Kabupaten Maluku Tenggara,1999,high
+81.04,Kabupaten Buru,81.01,Kabupaten Maluku Tengah,1999,high
+81.05,Kabupaten Seram Bagian Timur,81.01,Kabupaten Maluku Tengah,1999,high
+81.06,Kabupaten Seram Bagian Barat,81.01,Kabupaten Maluku Tengah,2003,high
+81.07,Kabupaten Kepulauan Aru,81.02,Kabupaten Maluku Tenggara,1999,high
+81.08,Kabupaten Maluku Barat Daya,81.02,Kabupaten Maluku Tenggara,2008,high
+81.09,Kabupaten Buru Selatan,81.01,Kabupaten Maluku Tengah,2008,high
+81.72,Kota Tual,81.02,Kabupaten Maluku Tenggara,2007,high
+82.02,Kabupaten Halmahera Tengah,82.01,Kabupaten Halmahera Barat,1999,med
+82.03,Kabupaten Halmahera Utara,82.01,Kabupaten Halmahera Barat,1999,med
+82.04,Kabupaten Halmahera Selatan,82.01,Kabupaten Halmahera Barat,2003,med
+82.06,Kabupaten Halmahera Timur,82.01,Kabupaten Halmahera Barat,2003,med
+82.07,Kabupaten Pulau Morotai,82.01,Kabupaten Halmahera Barat,2008,med
+82.08,Kabupaten Pulau Taliabu,82.05,Kabupaten Kepulauan Sula,2013,med
+82.71,Kota Ternate,82.01,Kabupaten Halmahera Barat,1999,med
+82.72,Kota Tidore Kepulauan,82.01,Kabupaten Halmahera Barat,2003,med
+91.05,Kabupaten Kepulauan Yapen,91.06,Kabupaten Biak Numfor,1969,low
+91.10,Kabupaten Sarmi,91.03,Kabupaten Jayapura,2002,low
+91.11,Kabupaten Keerom,91.03,Kabupaten Jayapura,2002,low
+91.15,Kabupaten Waropen,91.06,Kabupaten Biak Numfor,2002,low
+91.19,Kabupaten Supiori,91.06,Kabupaten Biak Numfor,2003,low
+91.20,Kabupaten Mamberamo Raya,91.03,Kabupaten Jayapura,2008,low
+91.71,Kota Jayapura,91.03,Kabupaten Jayapura,1993,low
+92.06,Kabupaten Teluk Bintuni,92.02,Kabupaten Manokwari,2002,low
+92.07,Kabupaten Teluk Wondama,92.02,Kabupaten Manokwari,2002,low
+92.08,Kabupaten Kaimana,92.03,Kabupaten Fak Fak,2002,low
+92.11,Kabupaten Manokwari Selatan,92.02,Kabupaten Manokwari,2012,low
+92.12,Kabupaten Pegunungan Arfak,92.02,Kabupaten Manokwari,2012,low
+93.02,Kabupaten Boven Digoel,93.01,Kabupaten Merauke,2002,low
+93.03,Kabupaten Mappi,93.01,Kabupaten Merauke,2002,low
+93.04,Kabupaten Asmat,93.01,Kabupaten Merauke,2002,low
+94.01,Kabupaten Nabire,94.03,Kabupaten Paniai,1996,low
+94.02,Kabupaten Puncak Jaya,94.03,Kabupaten Paniai,1993,low
+94.04,Kabupaten Mimika,92.03,Kabupaten Fak Fak,1996,low
+94.05,Kabupaten Puncak,94.03,Kabupaten Paniai,2008,low
+94.06,Kabupaten Dogiyai,94.03,Kabupaten Paniai,2008,low
+94.07,Kabupaten Intan Jaya,94.03,Kabupaten Paniai,2008,low
+94.08,Kabupaten Deiyai,94.03,Kabupaten Paniai,2008,low
+95.02,Kabupaten Pegunungan Bintang,95.01,Kabupaten Jayawijaya,2002,low
+95.03,Kabupaten Yahukimo,95.01,Kabupaten Jayawijaya,2002,low
+95.04,Kabupaten Tolikara,95.01,Kabupaten Jayawijaya,2002,low
+95.05,Kabupaten Mamberamo Tengah,95.01,Kabupaten Jayawijaya,2008,low
+95.06,Kabupaten Yalimo,95.01,Kabupaten Jayawijaya,2008,low
+95.07,Kabupaten Lanny Jaya,95.01,Kabupaten Jayawijaya,2008,low
+95.08,Kabupaten Nduga,95.01,Kabupaten Jayawijaya,2008,low
+96.02,Kabupaten Sorong Selatan,96.01,Kabupaten Sorong,2002,low
+96.03,Kabupaten Raja Ampat,96.01,Kabupaten Sorong,2002,low
+96.04,Kabupaten Tambrauw,96.01,Kabupaten Sorong,2008,low
+96.05,Kabupaten Maybrat,96.01,Kabupaten Sorong,2008,low
+96.71,Kota Sorong,96.01,Kabupaten Sorong,1999,low

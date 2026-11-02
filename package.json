@@ -1,0 +1,47 @@
+{
+  "name": "nusantara-1950",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "data:all": "node tools/build_all.mjs",
+    "data:boundaries": "node tools/01a_parse.mjs && node tools/01b_clean.mjs && node tools/01c_derive.mjs",
+    "data:admin": "node tools/02_admin1950.mjs",
+    "data:attrs": "node tools/03a_seeds.mjs && node tools/03b_attributes.mjs",
+    "data:report": "node tools/04_report.mjs",
+    "sim:headless": "tsx tools/headless.ts",
+    "start": "node server.mjs",
+    "heroku-postbuild": "vite build"
+  },
+  "dependencies": {
+    "@turf/turf": "^7.4.0",
+    "comlink": "^4.4.2",
+    "fflate": "^0.8.3",
+    "idb-keyval": "^6.3.0",
+    "jsts": "^2.12.1",
+    "maplibre-gl": "^6.16.0",
+    "topojson-client": "^3.1.0",
+    "topojson-server": "^3.0.1",
+    "uplot": "^1.6.32",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@types/geojson": "^7946.0.16",
+    "@types/topojson-client": "^3.1.5",
+    "@types/topojson-server": "^3.0.4",
+    "flatbush": "^4.7.0",
+    "geotiff": "^3.0.5",
+    "mapshaper": "^0.7.101",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

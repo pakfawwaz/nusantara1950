@@ -1,0 +1,62 @@
+{
+  "_note": "Administrative-reorganisation rules and costs. Money in Rp, 2026 prices. Rules are loosely modelled on Indonesian law (UU Pemda); values are game tunables, not statute.",
+  "startCashRp": 4000000000000.0,
+  "maxNewKecamatan": 2000,
+  "seaLinkKm": 50,
+  "regency": {
+    "minKecKabupaten": 5,
+    "minKecKota": 4,
+    "minPopKabupaten": 100000,
+    "minPopKota": 50000,
+    "kotaMinUrban": 0.2,
+    "persiapanMonths": 12,
+    "setupCostRp": 150000000000.0,
+    "annualOverheadRp": 60000000000.0,
+    "mergeCostRp": 20000000000.0,
+    "moveKecCostRp": 1000000000.0,
+    "mergeStabilityHit": 3,
+    "grantStabilityBonus": 2
+  },
+  "province": {
+    "minRegencies": 5,
+    "parentMinRegencies": 3,
+    "persiapanMonths": 24,
+    "setupCostRp": 800000000000.0,
+    "annualOverheadRp": 300000000000.0,
+    "mergeCostRp": 120000000000.0,
+    "moveRegencyCostRp": 5000000000.0,
+    "mergeStabilityHit": 5,
+    "grantStabilityBonus": 4
+  },
+  "kecamatan": {
+    "splitCostRp": 8000000000.0,
+    "annualOverheadRp": 3000000000.0,
+    "mergeCostRp": 2000000000.0,
+    "minSliverKm2": 0.5,
+    "minPieceFraction": 0.02,
+    "maxPieces": 6,
+    "quantStep": 0.0001
+  },
+  "split": {
+    "urbanSectorsGoToCore": [
+      6,
+      7,
+      8,
+      9
+    ],
+    "resourceSectors": {
+      "mining": 4,
+      "oilgas": 5,
+      "plantation": 1,
+      "fisheries": 2,
+      "forestry": 3
+    },
+    "coreWeight": 6.0,
+    "sampleSmoothing": 0.15,
+    "laborDamping": 0.7,
+    "labelMarginGrid": 25
+  },
+  "undo": {
+    "maxEntries": 50
+  }
+}

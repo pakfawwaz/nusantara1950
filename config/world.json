@@ -1,0 +1,54 @@
+{
+  "_note": "Global scenario targets and data-generation parameters. Everything tunable lives in /config or src/sim/balance.ts.",
+  "startDate": "1950-08-17",
+  "startYear": 1950,
+  "targetGdpPerCapita2026": 89000000,
+  "startGdpPerCapitaFraction": 0.1111111,
+  "targets1950": {
+    "population": 75000000,
+    "lifeExpectancy": 40,
+    "adultLiteracy": 0.40,
+    "meanYearsSchooling": 1.0,
+    "urbanShare": 0.12,
+    "agricultureOutputShare": 0.575,
+    "agricultureJobShare": 0.75
+  },
+  "population": {
+    "areaExponent": 0.45,
+    "kotaBoost": 4.0,
+    "smallAreaBoost": 1.5,
+    "smallAreaKm2": 15,
+    "coastalBoost": 1.15,
+    "sampleMax": 16,
+    "census1961_thousands_by_group": {
+      "ACEH": 1629, "SUMUT": 3623, "SUMBAR": 2319, "RIAU_KEPRI": 1236, "JAMBI": 744, "SUMSEL_BABEL": 2741, "BENGKULU": 406, "LAMPUNG": 1669,
+      "JAKARTA": 2907, "JABAR_BANTEN": 17614, "JATENG": 18407, "DIY": 2241, "JATIM": 21823, "BALI": 1783, "NTB": 2204, "NTT": 1966,
+      "KALBAR": 1581, "KALTENG": 497, "KALSEL": 1474, "KALTIM_KALTARA": 552, "SULUT_GORONTALO": 1278, "SULTENG": 914, "SULSEL_SULBAR": 3402,
+      "SULTRA": 614, "MALUKU_MALUT": 791, "PAPUA": 700
+    },
+    "groups": {
+      "ACEH": ["11"], "SUMUT": ["12"], "SUMBAR": ["13"], "RIAU_KEPRI": ["14","21"], "JAMBI": ["15"], "SUMSEL_BABEL": ["16","19"], "BENGKULU": ["17"], "LAMPUNG": ["18"],
+      "JAKARTA": ["31"], "JABAR_BANTEN": ["32","36"], "JATENG": ["33"], "DIY": ["34"], "JATIM": ["35"], "BALI": ["51"], "NTB": ["52"], "NTT": ["53"],
+      "KALBAR": ["61"], "KALTENG": ["62"], "KALSEL": ["63"], "KALTIM_KALTARA": ["64","65"], "SULUT_GORONTALO": ["71","75"], "SULTENG": ["72"], "SULSEL_SULBAR": ["73","76"],
+      "SULTRA": ["74"], "MALUKU_MALUT": ["81","82"], "PAPUA": ["91","92","93","94","95","96"]
+    }
+  },
+  "economy": {
+    "gdpPerCapitaProvinceFactor": { "11":1.10,"12":1.20,"13":1.05,"14":1.15,"15":1.00,"16":1.25,"17":0.85,"18":0.85,"19":1.30,"21":1.10,
+      "31":1.60,"32":1.00,"33":0.82,"34":0.88,"35":0.95,"36":0.92,"51":0.80,"52":0.65,"53":0.60,"61":0.95,"62":0.80,"63":1.05,"64":1.30,"65":1.20,
+      "71":0.90,"72":0.75,"73":0.85,"74":0.70,"75":0.75,"76":0.72,"81":0.80,"82":0.75,"91":0.65,"92":0.65,"93":0.55,"94":0.55,"95":0.50,"96":0.65 },
+    "sectorProductivity": { "food":1.0, "plantation":1.9, "fisheries":1.3, "forestry":1.1, "mining":4.0, "oilgas":12.0, "manufacturing":3.2, "construction":2.2, "services":2.6, "tourism":3.0 },
+    "capitalOutputRatio": { "base":1.8, "urbanAdd":0.8, "enclaveAdd":1.2 },
+    "gdpPerCapitaCapRatio": 12
+  },
+  "social": {
+    "literacyBase": { "11":0.45,"12":0.50,"13":0.52,"14":0.45,"15":0.40,"16":0.40,"17":0.40,"18":0.35,"19":0.38,"21":0.45,
+      "31":0.55,"32":0.33,"33":0.30,"34":0.45,"35":0.30,"36":0.28,"51":0.30,"52":0.20,"53":0.28,"61":0.35,"62":0.33,"63":0.40,"64":0.38,"65":0.36,
+      "71":0.60,"72":0.40,"73":0.38,"74":0.32,"75":0.45,"76":0.35,"81":0.45,"82":0.40,"91":0.15,"92":0.15,"93":0.12,"94":0.10,"95":0.05,"96":0.18 },
+    "lifeExpectancyOffset": { "11":0.5,"12":1.5,"13":1.0,"14":0.5,"15":0.0,"16":0.5,"17":-0.5,"18":0.0,"19":0.5,"21":1.0,
+      "31":4.0,"32":-1.5,"33":-0.5,"34":1.0,"35":-0.5,"36":-1.5,"51":1.0,"52":-3.0,"53":-3.0,"61":-1.5,"62":-2.0,"63":-0.5,"64":-1.0,"65":-1.5,
+      "71":1.0,"72":-1.0,"73":0.0,"74":-1.5,"75":0.0,"76":-1.0,"81":-1.0,"82":-1.5,"91":-4.0,"92":-4.0,"93":-5.0,"94":-5.0,"95":-6.0,"96":-4.0 },
+    "age0_14": 0.40, "age65": 0.04
+  },
+  "locked": { "provinceId": "IRIANBARAT", "joinYear": 1963 }
+}

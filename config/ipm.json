@@ -1,0 +1,5 @@
+{
+  "_note": "IPM (BPS 'new method' 2010+): geometric mean of health, education and adjusted-expenditure indices. Goalposts follow BPS (UNDP 2010 method). Expenditure proxy: adjusted per-capita expenditure (constant 2026 Rp/yr) = spendRatio x GDP per capita.",
+  "goalposts": { "lifeExpectancy": [20, 85], "meanYearsSchooling": [0, 15], "expectedYearsSchooling": [0, 18], "expenditure_rp_per_year": [1007436, 26572352] },
+  "spendRatio": 0.55
+}
