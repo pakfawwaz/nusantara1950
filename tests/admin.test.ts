@@ -80,3 +80,13 @@ describe('province commands', () => {
     await g.undo(); expect(w.provIndex.has('DIY')).toBe(true);
   });
 });
+
+describe('contiguity across islands', () => {
+  it('Kepulauan Seribu\'s islands may join the Jakarta mainland kecamatan in one regency', () => {
+    const w = loadWorld(); const k = w.regencies[w.regIndex.get('R31.71') as number]; expect(k.name).toMatch(/Jakarta/);
+    const isl = k.kec.filter(i => /seribu/i.test(w.modernKab[i])), main = k.kec.filter(i => /Jakarta Utara/i.test(w.modernKab[i]));
+    expect(isl.length).toBeGreaterThan(0); expect(main.length).toBeGreaterThan(0);
+    expect(components(w, [...isl, ...main]).length).toBe(1); expect(components(w, [...isl, ...main.slice(0, 2)]).length).toBe(1);
+    const far = w.regencies.find(r => /Medan|Surabaya/i.test(r.name)); if (far) expect(components(w, [...isl, ...far.kec.slice(0, 1)]).length).toBe(2);
+  });
+});

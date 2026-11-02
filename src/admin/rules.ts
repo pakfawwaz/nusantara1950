@@ -21,14 +21,32 @@ export function components(w: World, kecs: readonly number[]): number[][] {
   if (comps.length < 2) return comps;
   // sea links: union-find over components using coastal kecamatan only
   const parent = comps.map((_, i) => i); const find = (a: number): number => (parent[a] === a ? a : (parent[a] = find(parent[a])));
+  // a purely insular part (an island group with no land neighbour outside itself, e.g. Kepulauan Seribu) may join any other part within seaLinkIslandKm
+  const insular = comps.map(c => { const s = new Set(c); return c.every(i => w.neighbors[i].every(j => s.has(j))); });
   const coastalOf = comps.map(c => c.filter(i => w.coastal[i]));
   for (let a = 0; a < comps.length; a++) for (let b = a + 1; b < comps.length; b++) {
     if (find(a) === find(b)) continue; let hit = false;
     outer: for (const i of coastalOf[a]) for (const j of coastalOf[b]) { if (haversineKm(w.labelLon[i], w.labelLat[i], w.labelLon[j], w.labelLat[j]) <= cfg.seaLinkKm) { hit = true; break outer; } }
+    if (!hit && (insular[a] || insular[b])) outer2: for (const i of comps[a]) for (const j of comps[b]) if (haversineKm(w.labelLon[i], w.labelLat[i], w.labelLon[j], w.labelLat[j]) <= cfg.seaLinkIslandKm) { hit = true; break outer2; }
     if (hit) parent[find(a)] = find(b);
   }
   const merged = new Map<number, number[]>(); comps.forEach((c, i) => { const r = find(i); const l = merged.get(r); if (l) l.push(...c); else merged.set(r, [...c]); });
   return [...merged.values()];
+}
+/**
+ * Contiguity of a group of whole regencies (used for forming a province). Each regency is one piece however many islands it has (Kepulauan Seribu is part of Jakarta);
+ * two regencies are joined by a land border or, across water, when any of their kecamatan lie within `seaLinkProvinceKm`.
+ */
+export function regenciesContiguous(w: World, regs: readonly number[]): boolean {
+  if (regs.length < 2) return true; const parent = regs.map((_, i) => i); const find = (a: number): number => (parent[a] === a ? a : (parent[a] = find(parent[a])));
+  const owner = new Map<number, number>(); regs.forEach((r, a) => { for (const i of w.regencies[r].kec) owner.set(i, a); });
+  for (const [i, a] of owner) for (const j of w.neighbors[i]) { const b = owner.get(j); if (b !== undefined && b !== a) parent[find(a)] = find(b); }
+  for (let a = 0; a < regs.length; a++) for (let b = a + 1; b < regs.length; b++) {
+    if (find(a) === find(b)) continue; let hit = false;
+    outer: for (const i of w.regencies[regs[a]].kec) for (const j of w.regencies[regs[b]].kec) if (haversineKm(w.labelLon[i], w.labelLat[i], w.labelLon[j], w.labelLat[j]) <= cfg.seaLinkProvinceKm) { hit = true; break outer; }
+    if (hit) parent[find(a)] = find(b);
+  }
+  return new Set(regs.map((_, a) => find(a))).size === 1;
 }
 export const isContiguous = (w: World, kecs: readonly number[]): boolean => components(w, kecs).length <= 1;
 

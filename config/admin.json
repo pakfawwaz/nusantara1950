@@ -3,6 +3,8 @@
   "startCashRp": 4000000000000.0,
   "maxNewKecamatan": 2000,
   "seaLinkKm": 50,
+  "seaLinkProvinceKm": 150,
+  "seaLinkIslandKm": 200,
   "regency": {
     "minKecKabupaten": 5,
     "minKecKota": 4,

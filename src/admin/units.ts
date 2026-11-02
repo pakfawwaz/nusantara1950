@@ -1,6 +1,6 @@
 import type { World, Regency, Province } from '../world';
 import type { Applied, Command, Plan, Preview } from './types';
-import { R, P, newCheck, rule, checkRegencyShape, components, isContiguous, popOf } from './rules';
+import { R, P, newCheck, rule, checkRegencyShape, components, regenciesContiguous, popOf } from './rules';
 
 type Admin = { provinces: Province[]; regencies: Regency[] };
 const cloneAdmin = (w: World): Admin => ({ provinces: w.provinces.map(p => ({ ...p })), regencies: w.regencies.map(r => ({ ...r, kec: [...r.kec], merged: [...r.merged] })) });
@@ -110,7 +110,7 @@ export function planCreateProvince(w: World, month: number, cmd: Extract<Command
   const left = w.regencies.filter((_, i) => w.regProv[i] === p && !rs.includes(i));
   rule(c, left.length >= P.parentMinRegencies, `${par.name} keeps ${left.length} regencies`, `${par.name} would keep only ${left.length} regencies (min ${P.parentMinRegencies}).`);
   rule(c, kecs.includes(cmd.capital), 'Capital is inside the new province', 'The capital must be a kecamatan of the new province.');
-  rule(c, isContiguous(w, kecs), 'Regencies form one contiguous area', 'The regencies are not contiguous.');
+  rule(c, regenciesContiguous(w, rs), 'Regencies form one contiguous area', 'The regencies are not contiguous (islands of a regency count as part of it; separate regencies must touch or lie within 150 km by sea).');
   const months = P.persiapanMonths, summary = `Create Province ${name} (${rs.length} regencies, ${fmt(popOf(w, kecs))} people)`;
   const preview = prev(c, P.setupCostRp, P.annualOverheadRp, months, summary);
   if (!preview.ok) return { preview };
