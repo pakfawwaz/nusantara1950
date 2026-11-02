@@ -10,6 +10,7 @@
     "spanKmPerHour": 9
   },
   "offroad": { "speedKmh": [14, 14, 9, 5], "swampFactor": 0.5 },
+  "buildExponent": 0.3, "buildRefKm": 100,
   "terrainCostFactor": { "swamp": 1.6, "monthsSwamp": 1.3, "monthsByTerrain": [1.0, 1.0, 1.25, 1.8] },
   "costIndex": [[1950, 0.45], [1975, 0.6], [2000, 0.8], [2026, 1.0], [2050, 1.1]],
   "governance": { "overrunMax": 0.6, "overrunBase": 0.05 },

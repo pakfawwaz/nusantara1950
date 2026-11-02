@@ -3,6 +3,11 @@ import type { Game } from '../game';
 import type { Command, Preview } from '../admin/types';
 import { field, fmtMoney, openCommandDialog, select, textInput, toast } from './modal';
 import { fmtPop } from '../map/modes';
+import { ZC, zoneCost } from '../sim/zones';
+import type { SimWorld } from '../sim/types';
+
+// state of the special-area form survives the panel being redrawn every month
+const zf = { name: '', cut: 0.5, ease: 0.5 };
 
 export interface AdminCtx { scope: 'kecamatan' | 'regency' | 'province'; sel: number[]; primary: number }
 const PIECE_COLORS = ['#3f7cc0', '#d9822b', '#4a9a5a', '#a2569d', '#c24a4a', '#2d9aa6'];
@@ -23,6 +28,27 @@ export class AdminPanel {
     return [...out].sort((a, b) => a - b).map(k => w.regencies[k].id);
   }
   private regName = (id: string) => this.w.regencies[this.w.regIndex.get(id) as number]?.name ?? id;
+
+
+  /** Special areas (otorita): create from the current selection, adjust or dissolve. */
+  private specialAreas(into: HTMLElement, sel: number[]): void {
+    const g = this.game, n = g.nation, d = h('div', { class: 'admin-sec' }, h('h4', { text: 'Special areas (otorita)' }));
+    const slider = (label: string, get: () => number, max: number, on: (v: number) => void): HTMLElement => { const out = h('span', { class: 'dim', text: `${Math.round(get() * 100)}%` }); const r = h('input', { type: 'range', min: '0', max: String(Math.round(max * 100)), step: '5', value: String(Math.round(get() * 100)), 'aria-label': label }); r.addEventListener('input', () => { on(Number(r.value) / 100); out.textContent = `${r.value}%`; }); return h('label', { class: 'setrow' }, h('span', { text: label }), r, out); };
+    const free = sel.filter(i => !n.zones.list.some(z => z.kecs.includes(i)));
+    d.append(h('p', { class: 'dim', text: `Select kecamatan, then create an area with its own corporate-tax cut (revenue lost there) and lighter regulation (better local governance, small stability cost). Investors favour low-tax, well-run places. Set-up costs ${(ZC.setupCostGdpShare * 100).toFixed(2)}% of GDP per kecamatan.` }));
+    const name = h('input', { type: 'text', placeholder: 'Name, e.g. Otorita Batam', value: zf.name, style: 'width:100%' }); name.addEventListener('input', () => { zf.name = name.value; });
+    const cost = zoneCost(n, free.length);
+    d.append(name, slider('Corporate-tax cut', () => zf.cut, ZC.maxPphCut, v => { zf.cut = v; }), slider('Regulation eased', () => zf.ease, 1, v => { zf.ease = v; }),
+      h('div', { class: 'btnrow' }, h('button', { class: 'btn primary', type: 'button', disabled: !free.length, text: free.length ? `Create from ${free.length} selected kecamatan (${fmtMoney(cost)})` : 'Select kecamatan not already in an area', onclick: () => void g.zoneCreate({ name: zf.name || `Special area ${n.zones.next}`, kecs: free, pphCut: zf.cut, ease: zf.ease }).then(r => { toast(r.ok ? (r.summary ?? 'Done') : (r.error ?? 'Not allowed'), !r.ok); if (r.ok) zf.name = ''; }) })));
+    for (const z of n.zones.list) {
+      const pop = z.kecs.reduce((s, i) => s + (this.w.alive[i] ? this.w.pop[i] : 0), 0);
+      d.append(h('div', { class: 'hist' }, h('b', { text: z.name }), ` · ${z.kecs.length} kecamatan · ${fmtPop(pop)} people`,
+        slider('Tax cut', () => z.pphCut, ZC.maxPphCut, v => void g.zoneEdit(z.id, { pphCut: v })), slider('Regulation eased', () => z.ease, 1, v => void g.zoneEdit(z.id, { ease: v })),
+        h('div', { class: 'btnrow' }, h('button', { class: 'btn', type: 'button', text: 'Dissolve', onclick: () => void g.zoneRemove(z.id) }))));
+    }
+    if (n.zones.organicBuilt) d.append(h('p', { class: 'dim', text: `Private firms have started ${n.zones.organicBuilt} plants on their own so far.` }));
+    into.append(d);
+  }
 
   render(into: HTMLElement, ctx: AdminCtx): void {
     const w = this.w, g = this.game; into.replaceChildren();
@@ -54,6 +80,7 @@ export class AdminPanel {
         }
       }
     }
+    this.specialAreas(into, sel);
     const hist = g.history.slice(-5).reverse();
     sec('Recent changes', ...(hist.length ? hist.map(e => h('div', { class: 'hist', text: `Month ${e.month}: ${e.summary}${e.cost ? ` (${fmtMoney(e.cost)})` : ''}` })) : [h('div', { class: 'hist', text: 'None yet.' })]),
       h('div', { class: 'btnrow' }, btn(g.undoLabel() ? `Undo: ${g.undoLabel()}` : 'Nothing to undo', () => { g.undo(); toast('Undone'); }, !g.undoLabel())));

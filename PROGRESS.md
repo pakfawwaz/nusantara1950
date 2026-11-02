@@ -150,3 +150,26 @@ npm run build
 5. Any time: a disaster toast (e.g. "Flooding near …"). Budget shows *Disaster relief* for a year.
 6. **⚙ Settings**: switch to Randomized within the first year, or start a new game with a seed; switch off *Reaching 2050* and play past 2050; change the default threshold.
 7. Let hyperinflation happen on purpose (Budget: huge deficits with no bond capacity) or the 2050 limit: the **end screen** shows reason, score, chart, decisions. *Keep watching* turns the checks off.
+
+## M7 — calibration, evaluation round, polish (in progress)
+
+Done
+- Calibration (`npm run sim:headless -- --policy=historical|passive|smart --years=1950-2030`), all with the shipped config:
+  - passive: ~41.6 M in 2026 = 47% of target (spec: <50%) ✔
+  - historical: ~84 M in 2026 (spec: 76–102 M) ✔
+  - smart: crosses 89 M around 2007–2008, ~18–19 years early (spec: 10–20) ✔
+  - Levers changed: `sectors.tfpGrowth` ×2.1, `frontier.polOffset` −0.8, `frontier.catchUpRp` 140 M (growth fades as income nears the frontier), policy multipliers (edu 1.5, stability 0.6, governance 1.0, openness 0.6, R&D 3.0), R&D saturation 0.8% GDP.
+- Evaluation round: build times sublinear in length (`transport.json` buildExponent 0.3; 1,500 km railway ≈ 11 years, was ~50); clock ~2.3× slower (speed 1 = 3.2 s per month); neighbouring countries as unplayable greyed land (Natural Earth 10m, public domain, `tools/05_neighbors.mjs`); roads and rail drawn as smooth Hermite/Catmull-Rom curves; Special Areas (otorita: tax cut, regulation eased, set-up cost, map outline; Regions panel); organic private industry once a year (chance ∝ return on cost × climate × stability × tax factor, plants scale with the economy); shipping lanes (approximate hand-drawn routes, `config/zones.json`) giving ports and plants within 160 km an output bonus up to +12%.
+- Tutorial (first run, replay from Settings), `tests/zones.test.ts`.
+
+Still to do
+- Performance: average tick is 55–60 ms (target <50), spikes ~500 ms at January and when projects complete (access recompute).
+- Better-looking kecamatan polygons (needs a new boundary source; see DATA_NOTES.md).
+- Randomized-mode calibration pass, PROGRESS/README final tidy.
+
+Please test manually (M7)
+1. First load: the tour appears; Esc skips; Settings → Replay the tutorial.
+2. Grey neighbours: click Malaysia; a toast says it is outside your jurisdiction.
+3. Draw a 1,000+ km railway in the Transport tools: the preview should show years, not decades.
+4. Select a few kecamatan → Regions → Special areas → create; teal outline appears; edit the sliders; dissolve.
+5. Speed 1 should feel like ~3 seconds a month.

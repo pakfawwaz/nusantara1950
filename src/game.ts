@@ -1,3 +1,4 @@
+import { createZone, editZone, removeZone, remapZones, type ZoneSpec } from './sim/zones';
 import type { World } from './world';
 import type { Applied, Change, Command, Plan, Preview } from './admin/types';
 import { planCreateProvince, planCreateRegency, planMergeProvinces, planMergeRegencies, planMoveKecamatan, planMoveRegency, planRename, planSetCapital } from './admin/units';
@@ -69,7 +70,7 @@ export class Game {
   /** After a split / merge the new rows become the reference state of the production function and of every target offset. */
   private rebase(ch: Change): void {
     if (!ch.geometry) return; const w = this.world, n = this.nation;
-    remapAfterGeometry(w as unknown as TW, n.transport, ch); remapIndustries(w as unknown as SimWorld, n, ch); n.transport.dirty = true; n.transport.rebase.push(...ch.upserted);
+    remapAfterGeometry(w as unknown as TW, n.transport, ch); remapIndustries(w as unknown as SimWorld, n, ch); remapZones(w as unknown as SimWorld, n, ch); n.transport.dirty = true; n.transport.rebase.push(...ch.upserted);
     industryRows(w as unknown as SimWorld, n, yearOf(n.month)); // refresh per-kecamatan industry rows before the new pieces are rebaselined
     for (const i of ch.upserted) if (w.alive[i]) { w.grdp[i] = sumOut(w, i); rebaseline(w as never, i, n.tfp, yearOf(n.month), n.gov0, n.kbCov); derive(w as never, i, true); }
   }
@@ -122,6 +123,13 @@ export class Game {
     await this.gate(); const r = resolveDecision(this.world as unknown as SimWorld, this.nation, id, option, false); if (r === null) return { ok: false, error: 'That decision is no longer open.' };
     this.poke(); return { ok: true, summary: r };
   }
+  async zoneCreate(spec: ZoneSpec): Promise<{ ok: boolean; error?: string; summary?: string }> {
+    await this.gate(); const e = createZone(this.world as unknown as SimWorld, this.nation, spec); if (e) return { ok: false, error: e }; this.poke(); return { ok: true, summary: `Special area "${spec.name.trim()}" created.` };
+  }
+  async zoneEdit(id: number, patch: { pphCut?: number; ease?: number }): Promise<{ ok: boolean; error?: string; summary?: string }> {
+    await this.gate(); const e = editZone(this.world as unknown as SimWorld, this.nation, id, patch); if (e) return { ok: false, error: e }; this.poke(); return { ok: true, summary: 'Special area updated.' };
+  }
+  async zoneRemove(id: number): Promise<void> { await this.gate(); removeZone(this.nation, id); this.poke(); }
   async setSettings(patch: Partial<Omit<GameSettings, 'lose'>> & { lose?: Partial<GameSettings['lose']> }): Promise<void> {
     await this.gate(); const s = this.nation.settings; const { lose, ...rest } = patch; Object.assign(s, rest); if (lose) Object.assign(s.lose, lose); this.poke();
   }

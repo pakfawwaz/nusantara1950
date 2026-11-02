@@ -1,7 +1,7 @@
 import type { SimClient } from './client';
 
 /** Real milliseconds per game month at speeds 1..4 (0 = paused). */
-export const SPEED_MS = [Infinity, 1400, 600, 250, 80];
+export const SPEED_MS = [Infinity, 3200, 1600, 700, 250];
 export class Clock {
   speed = 0; private acc = 0; private last = 0; private listeners: Array<(s: number) => void> = []; blocked = false;
   constructor(private sim: SimClient) { requestAnimationFrame(t => this.loop(t)); }

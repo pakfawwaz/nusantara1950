@@ -19,7 +19,8 @@ export function railEdgeCost(w: TW, a: number, b: number, cls: number, fromCls =
   const neu = TR.rail[cls].cost[t] * sw; const credit = fromCls >= 0 ? TR.upgradeCredit * TR.rail[fromCls].cost[t] * sw : 0;
   return { km, cost: km * Math.max(fromCls >= 0 ? TR.minUpgradeShare * neu : neu, neu - credit) };
 }
-const monthsFor = (base: number, perKm: number, km: number, terrFactor: number): number => (km <= 0 ? 0 : Math.max(1, Math.round(base + perKm * km * terrFactor)));
+/** Build time grows less than linearly with length (crews work on several fronts at once); normalised so a buildRefKm project takes monthsPerKm × buildRefKm months. */
+const monthsFor = (base: number, perKm: number, km: number, terrFactor: number): number => (km <= 0 ? 0 : Math.max(1, Math.round(base + perKm * Math.pow(km, TR.buildExponent) * Math.pow(TR.buildRefKm, 1 - TR.buildExponent) * terrFactor)));
 
 /** Validate a request and price it. `overrun` is the cost multiplier from weak governance (1 = none). */
 export function planProject(w: TW, tr: TransportState, spec: ProjectSpec, year: number, overrun = 1): Plan {

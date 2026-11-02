@@ -134,16 +134,16 @@
    0.9
   ],
   "tfpGrowth": [
-   0.0035,
-   0.004,
-   0.0035,
-   0.002,
-   0.008,
-   0.008,
-   0.009,
-   0.005,
-   0.006,
-   0.0055
+   0.00735,
+   0.0084,
+   0.00735,
+   0.0042,
+   0.0168,
+   0.0168,
+   0.0189,
+   0.0105,
+   0.0126,
+   0.01155
   ],
   "formalShare": [
    0.03,
@@ -236,18 +236,21 @@
    ]
   ],
   "policyMultiplier": {
-   "edu": 0.45,
-   "stability": 0.4,
-   "governance": 0.2,
-   "openness": 0.3,
-   "rnd": 1.0
+   "edu": 1.5,
+   "stability": 0.6,
+   "governance": 1.0,
+   "openness": 0.6,
+   "rnd": 3.0
   },
-  "rndSaturationPctGdp": 0.3,
-  "rndMaxBoost": 0.25,
+  "rndSaturationPctGdp": 0.8,
+  "rndMaxBoost": 0.6,
   "multiplierRange": [
    0.2,
    2.5
-  ]
+  ],
+  "polOffset": -0.8,
+  "catchUpRp": 140000000,
+  "catchUpFloor": 0.15
  },
  "capital": {
   "depreciation": 0.05,

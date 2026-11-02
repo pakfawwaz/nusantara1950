@@ -2,6 +2,7 @@ import { h } from './dom';
 import { openPanel } from './panel';
 import type { Game } from '../game';
 import { SETTINGS } from '../sim/events';
+import { startTutorial } from './tutorial';
 
 export const NEWGAME_KEY = 'nusantara1950.newgame';
 export interface NewGameOptions { historical: boolean; seed: number; lose: { hyper: boolean; collapse: boolean; default: boolean; timeout: boolean }; defaultPct: number }
@@ -31,7 +32,7 @@ export function openSettings(game: Game): void {
       h('div', { class: 'setrow' }, (() => { const c = h('input', { type: 'checkbox' }); c.checked = s.lose.default; c.addEventListener('change', () => void game.setSettings({ lose: { default: c.checked } })); return c; })(), h('span', {}, 'Sovereign default', h('small', {}, 'Debt service above ', pct, `% of revenue for ${SETTINGS.defaultMonths / 12} years.`))),
       chk('Reaching 2050 without the target', 'If switched off the game carries on after 2050 as a sandbox.', 'timeout'),
       h('p', { class: 'dim', text: 'Ways to lose apply immediately. The win condition is fixed: real GDP per capita of Rp 89 million (2026 prices).' }),
-      h('div', { class: 'btnrow' }, h('button', { class: 'btn', type: 'button', text: 'Start a new game with these settings…', onclick: () => { if (confirm('Start a new game? Your current game is not saved unless you saved it.')) startNewGame({ historical: hist, seed, lose: { ...game.nation.settings.lose }, defaultPct: game.nation.settings.defaultPct }); } }))
+      h('div', { class: 'btnrow' }, h('button', { class: 'btn', type: 'button', text: 'Replay the tutorial', onclick: () => { document.querySelector('.modal-back')?.remove(); startTutorial(); } }), h('button', { class: 'btn', type: 'button', text: 'Start a new game with these settings…', onclick: () => { if (confirm('Start a new game? Your current game is not saved unless you saved it.')) startNewGame({ historical: hist, seed, lose: { ...game.nation.settings.lose }, defaultPct: game.nation.settings.defaultPct }); } }))
     );
   });
 }

@@ -22,6 +22,7 @@ import { SimCore, newNation } from './sim/core';
 import { EventWatcher } from './ui/events';
 import * as eventsApi from './sim/events';
 import { takeNewGame } from './ui/settings';
+import { startTutorial, tutorialSeen } from './ui/tutorial';
 import { SimClient } from './sim/client';
 import { Clock } from './sim/clock';
 import { Autosaver } from './save/autosave';
@@ -47,6 +48,7 @@ async function boot(): Promise<void> {
     setLoad('Starting the economy…', 0.88); new SimCore(world, game.nation).bootstrap(world.transportSeed(), world.industrySeed()); }
   setLoad('Starting map…', 0.94);
   const view = new MapView($('map'), world);
+  view.onForeign = name => toast(`${name} is a sovereign country — outside your jurisdiction.`, true);
   await view.ready();
   const labels = new Labels($<HTMLCanvasElement>('labels'), view, world);
   const sel = new Selection(view, world, $<HTMLCanvasElement>('draw'));
@@ -101,6 +103,7 @@ async function boot(): Promise<void> {
   if (loadedNote) toast(loadedNote, loadedNote.startsWith('Could not'));
   // every admin / geometry change funnels through here
   game.onChange(async ch => {
+    view.setZones(game.nation.zones.list);
     const t0 = performance.now();
     if (!ch.tick) void sim.push(); // the worker needs the new structure (taken now, sent in order)
     if (ch.geometry) await view.syncFeatures(ch.removedIds, ch.upserted);
@@ -111,7 +114,7 @@ async function boot(): Promise<void> {
   // monthly tick: refresh the chrome, recolour dynamic map modes (throttled at high speed), keep the inspector live, autosave
   let ticks = 0;
   sim.tickListeners.push(() => {
-    ticks++; refreshChrome(); watcher.check(); const every = clock.speed >= 3 ? 3 : 1;
+    ticks++; view.setZones(game.nation.zones.list); refreshChrome(); watcher.check(); const every = clock.speed >= 3 ? 3 : 1;
     refreshInfra();
     if (ticks % every === 0) { if (!mode.static && !heatOn) applyMode(mode.id); inspector.refresh(); }
     void autosave.tick();
@@ -133,6 +136,7 @@ async function boot(): Promise<void> {
   view.map.on('mouseout', () => { tip.hidden = true; view.setHover(-1); });
 
   $('loading').remove();
+  if (!pending && !tutorialSeen()) window.setTimeout(() => startTutorial(), 400);
   // Debug hook used by the headless browser checks; harmless in production.
   (window as unknown as { __game: unknown }).__game = { world, view, sel, labels, inspector, applyMode, game, admin, sim, clock, autosave, bctx, watcher, events: eventsApi };
 }

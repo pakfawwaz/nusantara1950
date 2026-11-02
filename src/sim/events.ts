@@ -37,7 +37,7 @@ export const monthIndex = (year: number, moy1: number): number => (year - 1950) 
 export const monthLabel = (m: number): string => `${['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'][monthOfYear(m)]} ${yearOf(m)}`;
 
 // ------------------------------------------------------------------ seeded generator (state kept in the save so a seed replays the same world)
-function rand(ev: EventState): number {
+export function rand(ev: EventState): number {
   let t = (ev.rng = (ev.rng + 0x6d2b79f5) >>> 0); t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
 }
 const between = (ev: EventState, r: ReadonlyArray<number>): number => r[0] + (r[1] - r[0]) * rand(ev);

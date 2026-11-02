@@ -1,3 +1,4 @@
+import ZONES from '../../config/zones.json';
 import * as maplibregl from 'maplibre-gl';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import workerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?url';
@@ -35,12 +36,19 @@ export class MapView {
     this.map.on('error', e => console.error('[maplibre]', e.error?.message ?? e));
   }
 
+  /** Called when a foreign country is clicked (set by main). */
+  onForeign?: (name: string) => void;
+
   ready(): Promise<void> {
     return new Promise(resolve => {
       this.map.on('load', () => {
         const w = this.world;
         this.map.addImage('hatch', hatchImage(), { pixelRatio: 1 });
         this.map.addImage('hatchPrep', hatchImage('rgba(140,47,43,0.75)', true), { pixelRatio: 1 });
+        this.map.addSource('neighbors', { type: 'geojson', data: `${import.meta.env.BASE_URL}data/neighbors.json` });
+        this.map.addLayer({ id: 'neighbors-fill', type: 'fill', source: 'neighbors', paint: { 'fill-color': '#cfc8b6', 'fill-opacity': 0.9 } });
+        this.map.addLayer({ id: 'neighbors-line', type: 'line', source: 'neighbors', paint: { 'line-color': 'rgba(90,80,62,0.6)', 'line-width': 0.8, 'line-dasharray': [3, 2] } });
+        this.map.on('click', 'neighbors-fill', e => { if (this.pick(e.point.x, e.point.y) >= 0) return; const nm = e.features?.[0]?.properties?.name; this.onForeign?.(String(nm ?? 'This country')); });
         this.map.addSource('kec', { type: 'geojson', data: { type: 'FeatureCollection', features: w.features.slice(0, w.n).filter((_, i) => w.alive[i]) }, promoteId: 'id', tolerance: 0.25, buffer: 32 });
         this.map.addLayer({ id: 'kec-fill', type: 'fill', source: 'kec', paint: { 'fill-color': FILL_EXPR as never, 'fill-antialias': false } });
         this.map.addLayer({ id: 'kec-locked', type: 'fill', source: 'kec', paint: { 'fill-pattern': 'hatch', 'fill-opacity': ['case', ['boolean', ['feature-state', 'locked'], false], 1, 0] } });
@@ -65,6 +73,11 @@ export class MapView {
         this.map.addLayer({ id: 'infra-projpt', type: 'circle', source: 'infra', filter: isT('projpt'), paint: { 'circle-radius': 6, 'circle-color': 'rgba(224,138,30,0.25)', 'circle-stroke-color': '#e08a1e', 'circle-stroke-width': 2 } });
         this.map.addLayer({ id: 'hover-line', type: 'line', source: 'kec', paint: { 'line-color': '#1a2a3a', 'line-width': ['case', ['boolean', ['feature-state', 'hover'], false], 2.0, 0] } });
         this.map.addLayer({ id: 'sel-line', type: 'line', source: 'kec', layout: { 'line-join': 'round' }, paint: { 'line-color': '#e0301e', 'line-width': ['case', ['boolean', ['feature-state', 'sel'], false], 3.0, 0] } });
+        this.map.addSource('lanes', { type: 'geojson', data: { type: 'FeatureCollection', features: Object.entries(ZONES.lanes.routes).map(([name, c]) => ({ type: 'Feature' as const, properties: { name }, geometry: { type: 'LineString' as const, coordinates: c } })) } });
+        this.map.addLayer({ id: 'lanes-line', type: 'line', source: 'lanes', paint: { 'line-color': 'rgba(40,90,150,0.55)', 'line-width': 2, 'line-dasharray': [1, 2.5] } });
+        this.map.addSource('zones', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
+        this.map.addLayer({ id: 'zones-fill', type: 'fill', source: 'zones', paint: { 'fill-color': '#1f8a8a', 'fill-opacity': 0.28 } });
+        this.map.addLayer({ id: 'zones-line', type: 'line', source: 'zones', paint: { 'line-color': '#0f5f5f', 'line-width': 1.6, 'line-dasharray': [2, 1] } });
         this.map.addSource('preview', { type: 'geojson', data: { type: 'FeatureCollection', features: [] } });
         this.map.addLayer({ id: 'preview-fill', type: 'fill', source: 'preview', paint: { 'fill-color': ['get', 'color'], 'fill-opacity': 0.5 } });
         this.map.addLayer({ id: 'preview-pt', type: 'circle', source: 'preview', filter: ['==', ['geometry-type'], 'Point'], paint: { 'circle-radius': 5.5, 'circle-color': ['get', 'color'], 'circle-stroke-color': '#ffffff', 'circle-stroke-width': 1.6 } });
@@ -116,6 +129,13 @@ export class MapView {
   prune(): void { const w = this.world; for (const i of [...this.selected]) if (i >= w.n || !w.alive[i]) this.selected.delete(i); }
 
   setInfra(fc: GeoJSON.FeatureCollection): void { (this.map.getSource('infra') as maplibregl.GeoJSONSource).setData(fc); }
+  private zoneSig = '';
+  /** Outline the special areas (teal, dashed). Cheap no-op when nothing changed. */
+  setZones(zones: Array<{ id: number; kecs: number[] }>): void {
+    const sig = zones.map(z => `${z.id}:${z.kecs.join(',')}`).join('|'); if (sig === this.zoneSig) return; this.zoneSig = sig; const w = this.world;
+    const feats = zones.flatMap(z => z.kecs.filter(i => i < w.n && w.alive[i]).map(i => w.features[i]));
+    (this.map.getSource('zones') as maplibregl.GeoJSONSource | undefined)?.setData({ type: 'FeatureCollection', features: feats });
+  }
   setPreview(fc: GeoJSON.FeatureCollection | null): void { (this.map.getSource('preview') as maplibregl.GeoJSONSource).setData(fc ?? { type: 'FeatureCollection', features: [] }); }
 
   applyMode(res: ModeResult): void {

@@ -91,3 +91,11 @@ Sim calibration (headless harness) is not done yet — see PROGRESS.md.
 
 ## Deployment
 - `npm run build` → `dist/`; `node server.mjs` serves it (also what Heroku runs through the `Procfile`). Heroku: `heroku create`, then `git push heroku main` (the Node buildpack runs `heroku-postbuild` = `vite build`) — or connect the GitHub repo in the Heroku dashboard.
+
+## Calibration (M7)
+Headless runs (seed 1, historical event mode): passive 2026 ≈ 41.6 M Rp (47% of the 89 M target); historical policy ≈ 84 M; smart policy passes 89 M around 2007–2008. The agents live in `tools/policies.ts`; the numbers move a few percent with the random seed and with organic industry. These are design targets, not forecasts. Per-capita values are 2026 prices.
+
+## New approximate data (M7)
+- Neighbouring countries: Natural Earth 10m admin-0 (public domain), simplified to ~0.02°; display only.
+- Shipping lanes: five hand-drawn polylines in `config/zones.json`; approximate, not survey data.
+- Kecamatan polygons are the simplified ones from the SQL source; a smoother source (e.g. BPS or geoBoundaries ADM3) is a TODO because the sandbox can only reach a few hosts.

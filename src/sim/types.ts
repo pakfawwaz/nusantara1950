@@ -1,3 +1,4 @@
+import type { ZoneState } from './zones';
 import type { World } from '../world';
 import type { BudgetKey } from './balance';
 import type { TransportState } from './transport';
@@ -39,7 +40,7 @@ export interface Nation {
   births: number; deaths: number; // last 12 months running (annualised from the last month)
   notices: string[];
   transport: TransportState;
-  ind: IndState; fin: FinState; prices: WorldPrices; settings: GameSettings; ev: EventState; end: EndState;
+  ind: IndState; fin: FinState; prices: WorldPrices; settings: GameSettings; ev: EventState; end: EndState; zones: ZoneState;
 }
 /** Per-regency / per-province results of the latest month (index = array index in world.regencies / world.provinces). */
 export interface UnitStats { regFund: Float64Array; regOp: Float64Array; regPad: Float64Array; regDbh: Float64Array; regDau: Float64Array; regDak: Float64Array; regGov: Float64Array; regStab: Float64Array; regPop: Float64Array;

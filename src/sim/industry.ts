@@ -11,7 +11,7 @@ export interface IndType {
   link?: { sector: number; strength: number; hours: number }; power?: { boost: number; hours: number }; tfp?: Array<[number, number]>; peak?: number; decay?: number;
 }
 export interface Partner { id: string; name: string; bloc: number; from: number; to: number; capGdp: number; rate: number; grace: number; maturity: number; tied: number; conditional: boolean; grant: boolean; width: number }
-export type Financing = 'apbn' | 'fdi' | 'aid' | 'legacy';
+export type Financing = 'apbn' | 'fdi' | 'aid' | 'legacy' | 'private';
 export interface Terms { offer?: string; foreign0: number; divestTo: number; divestYears: number; holiday: number; local: number; partner?: string; loan?: number; tied?: number }
 export interface Industry {
   id: number; type: string; name: string; kec: number; lon: number; lat: number; cap: number; status: 'building' | 'running' | 'closed'; paused: boolean;

@@ -1,3 +1,5 @@
+import { laneProximity, laneRows } from './lanes';
+import { ZC, newZones, zoneRows, organicIndustry } from './zones';
 import { B, BUD, BUDGET_KEYS, HIST, interp, monthOfYear, yearOf } from './balance';
 import type { BudgetKey } from './balance';
 import { SECTORS, isResource } from './fields';
@@ -24,7 +26,7 @@ export const defaultPolicy = (): Policy => ({
 export function migrateNation(n: Nation, seed: () => TransportState): Nation {
   const d = defaultPolicy(); for (const k of BUDGET_KEYS) { if (n.policy.budget[k] === undefined) n.policy.budget[k] = d.budget[k]; if (n.policy.budgetNext[k] === undefined) n.policy.budgetNext[k] = d.budgetNext[k]; }
   if (!n.transport) { n.transport = seed(); n.transport.dirty = true; }
-  n.ind ??= newIndState(); n.fin ??= newFin(); n.prices ??= newPrices(); n.settings = { ...defaultSettings(), ...(n.settings ?? {}), lose: { ...defaultSettings().lose, ...(n.settings?.lose ?? {}) } }; n.ev ??= newEvents(n.settings.seed); n.end ??= newEnd();
+  n.zones ??= newZones(); n.ind ??= newIndState(); n.fin ??= newFin(); n.prices ??= newPrices(); n.settings = { ...defaultSettings(), ...(n.settings ?? {}), lose: { ...defaultSettings().lose, ...(n.settings?.lose ?? {}) } }; n.ev ??= newEvents(n.settings.seed); n.end ??= newEnd();
   if (!n.fin.loans.length && n.debtExt > 0) seedLegacyDebt(n, n.debtExt);
   return n;
 }
@@ -35,19 +37,19 @@ export function newNation(seed = 1): Nation {
     agg: { pop: 0, gdp: 0, gdppc: 0, eduSat: 0, mys: 0, life: 0, ipm: 0, gov: 1, fund: 1, ineq: 0.4, poverty: 0, urban: 0, tfr: 0, eys: 0, lit: 0 },
     ipmPrev: 0, dIpm: 0.005,
     last: emptyFlows(), series: emptySeries(), flags: { hyper: false, collapse: false }, births: 0, deaths: 0, notices: [], transport: { ...newTransport(), dirty: false },
-    ind: newIndState(), fin: newFin(), prices: newPrices(), settings: defaultSettings(seed), ev: newEvents(seed), end: newEnd()
+    ind: newIndState(), fin: newFin(), prices: newPrices(), settings: defaultSettings(seed), ev: newEvents(seed), end: newEnd(), zones: newZones()
   };
 }
 
 const kmPerDegLat = 110.57;
 export class SimCore {
   readonly R: number; readonly P: number; stats: UnitStats;
-  tr: TransportSim; private isCap: Uint8Array; private span: Float64Array; private mult = new Float64Array(SECTORS); private delta: Float64Array; private lowStabMonths = 0; collapseMonths = 0; private ev!: { sector: number[] }; private loc: Float64Array; private provMult: Float64Array;
+  tr: TransportSim; private isCap: Uint8Array; private span: Float64Array; private mult = new Float64Array(SECTORS); private delta: Float64Array; polNow = 1; private lowStabMonths = 0; collapseMonths = 0; private ev!: { sector: number[] }; private loc: Float64Array; private zCut: Float64Array; private laneP: Float64Array; private laneM: Float64Array; private zEase: Float64Array; private provMult: Float64Array;
   constructor(readonly w: SimWorld, public nation: Nation) {
     this.R = w.regencies.length; this.P = w.provinces.length; const R = this.R, P = this.P;
     this.stats = { regFund: new Float64Array(R), regOp: new Float64Array(R), regPad: new Float64Array(R), regDbh: new Float64Array(R), regDau: new Float64Array(R), regDak: new Float64Array(R), regGov: new Float64Array(R).fill(1), regStab: new Float64Array(R).fill(B.stability.base), regPop: new Float64Array(R),
       provFund: new Float64Array(P), provOp: new Float64Array(P), provDau: new Float64Array(P), provPad: new Float64Array(P), provPop: new Float64Array(P), provGov: new Float64Array(P).fill(1) };
-    this.loc = new Float64Array(w.n).fill(1); this.provMult = new Float64Array(this.P).fill(1); this.isCap = new Uint8Array(w.n); this.span = new Float64Array(R); this.delta = new Float64Array(w.n);
+    this.loc = new Float64Array(w.n).fill(1); this.zCut = new Float64Array(w.n); this.laneP = new Float64Array(w.n); this.laneM = new Float64Array(w.n); laneProximity(w, this.laneP); this.zEase = new Float64Array(w.n); this.provMult = new Float64Array(this.P).fill(1); this.isCap = new Uint8Array(w.n); this.span = new Float64Array(R); this.delta = new Float64Array(w.n);
     w.regencies.forEach(r => { if (r.capital >= 0) this.isCap[r.capital] = 1; });
     this.tr = new TransportSim(w, nation);
     if (nation.transport.dirty) { // an administrative edit changed the network: recompute access, and make the new rows' access their baseline so output does not jump
@@ -88,6 +90,7 @@ export class SimCore {
     for (const r of this.w.regencies) if (r.status === 'preparing' && r.activeMonth <= n.month) r.status = 'active';
     for (const p of this.w.provinces) if (p.status === 'preparing' && p.activeMonth <= n.month) p.status = 'active';
     if (moy === 0 && n.month > 0) { this.tr.yearly(year); this.refreshSpan(); }
+    zoneRows(this.w, n, this.zCut, this.zEase); if (!n.zones.gdp0 && n.agg.gdp > 0) n.zones.gdp0 = n.agg.gdp; if (n.month % 12 === 1 || n.month === 0) laneRows(this.w, n, this.laneP, this.laneM); if (n.month > 0 && n.month % 12 === 1) organicIndustry(this.w, n, this.year(), this.zCut);
     eventsMonth(this.w, n, this.loc, this.provMult);
     this.demography(year, dt); this.social(year, dt); this.economy(year, dt); this.fiscal(year, dt);
     this.aggregate(moy === 0); this.macro(year, dt, moy === 0); evaluateEnd(n);
@@ -173,8 +176,8 @@ export class SimCore {
     // sector TFP: world frontier × policy
     const FM = B.frontier, pm = FM.policyMultiplier, rates = n.policy.rates;
     const openness = 1 - rates.customs / BUD.tax.limits.customs[1], rndBoost = FM.rndMaxBoost * (1 - Math.exp(-n.policy.budget.rnd / FM.rndSaturationPctGdp));
-    const pol = clamp(1 + pm.edu * (ag.eduSat - 0.35) + pm.stability * (n.stability / B.stability.base - 1) + pm.governance * (ag.gov / n.gov0 - 1) + pm.openness * (openness - 0.75) + pm.rnd * rndBoost, FM.multiplierRange[0], FM.multiplierRange[1]);
-    const f = interp(FM.growth, year);
+    const pol = clamp(1 + (FM.polOffset ?? 0) + pm.edu * (ag.eduSat - 0.35) + pm.stability * (n.stability / B.stability.base - 1) + pm.governance * (ag.gov / n.gov0 - 1) + pm.openness * (openness - 0.75) + pm.rnd * rndBoost, FM.multiplierRange[0], FM.multiplierRange[1]);
+    const f = interp(FM.growth, year) * Math.max(FM.catchUpFloor ?? 0.15, 1 - ag.gdppc / (FM.catchUpRp ?? 1e12)); this.polNow = pol;
     for (let s = 0; s < SECTORS; s++) A[s] *= 1 + Sx.tfpGrowth[s] * f * pol * dt;
     const burden = ag.gdp > 0 ? (n.last.revenue + n.last.pad) / ag.gdp : 0, C = B.capital;
     const taxF = 1 - C.taxPenalty * Math.max(0, burden - C.taxPenaltyFrom), infF = 1 - C.inflationPenalty * Math.min(n.inflation, 2);
@@ -208,7 +211,7 @@ export class SimCore {
           if (Sx.labourElasticity[s] === 0) Y = y0 * A[s] * mult[s];
           else { const l0 = S.l0[base + s], L = S.lab[base + s]; if (l0 > 0 && L > 0) Y = y0 * A[s] * Math.pow(L / l0, Sx.labourElasticity[s]) * mult[s]; }
         }
-        Y = Y * (1 + S.link[base + s]) * this.ev.sector[s] * this.loc[i] + S.ind[base + s] * this.loc[i]; S.out[base + s] = Y; g += Y;
+        Y = Y * (1 + S.link[base + s]) * this.ev.sector[s] * this.loc[i] * (isResource(s) ? 1 : 1 + this.laneM[i]) + S.ind[base + s] * this.loc[i]; S.out[base + s] = Y; g += Y;
       }
       w.grdp[i] = g;
       // capital accumulation from domestic saving
@@ -235,7 +238,7 @@ export class SimCore {
       const p = w.regProv[k], base = i * SECTORS, pop = w.pop[i], y = Math.max(1e5, w.grdp[i] / Math.max(1, pop));
       const comp = Math.min(0.98, T.complianceBase * Math.pow(S.gov[i] / n.gov0, 0.5)), lf = T.formalizationPerLnIncome * Math.max(0, Math.log(y / Y_REF));
       let formal = 0; for (let s = 0; s < SECTORS; s++) if (!isResource(s)) formal += S.out[base + s] * Math.min(T.formalMax, B.sectors.formalShare[s] + lf);
-      const pph = pol.rates.pph * aPph * formal * comp * ero, ppn = pol.rates.ppn * aPpn * formal * T.ppnBaseShare * compl * comp * ero;
+      const pph = pol.rates.pph * (1 - this.zCut[i]) * aPph * formal * comp * ero, ppn = pol.rates.ppn * aPpn * formal * T.ppnBaseShare * compl * comp * ero;
       const exc = pol.rates.excise * aExc * S.out[base + 6] * Math.min(T.formalMax, B.sectors.formalShare[6] + lf) * comp * ero, cus = pol.rates.customs * aCus * T.importOverGdp * w.grdp[i] * comp * ero;
       const oil = oilShare * S.out[base + 5], roy = T.royaltyRate * (S.out[base + 3] + S.out[base + 4]);
       const dbh = oil * BUD.transfers.dbhOil + roy * BUD.transfers.dbhMining; const pad = T.pad * w.grdp[i] * comp * ero;
@@ -322,7 +325,7 @@ export class SimCore {
       S.infraStock[i] += (inf * eff - Z.depreciation.infra * S.infraStock[i]) * dt; S.agStock[i] += (agr * eff - Z.depreciation.ag * S.agStock[i]) * dt;
     }
     this.governance(this.year());
-    for (let i = 0; i < w.n; i++) { if (!w.alive[i]) continue; const k = w.kecReg[i]; if (k < 0) continue; S.gov[i] = st.regGov[k]; S.fund[i] = st.regFund[k]; }
+    for (let i = 0; i < w.n; i++) { if (!w.alive[i]) continue; const k = w.kecReg[i]; if (k < 0) continue; S.gov[i] = st.regGov[k] * (1 + this.zEase[i] * ZC.easeGovBoost); S.fund[i] = st.regFund[k]; }
   }
 
   /** Governance quality per regency: funding, span of control (distance, population band), national staff pool, persiapan status, province funding. */

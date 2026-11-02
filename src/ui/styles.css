@@ -164,3 +164,9 @@ table.t tr.tot td { font-weight: 700; border-top: 1px solid var(--line); border-
 .chips span { display: inline-block; padding: 2px 8px; margin: 2px 4px 2px 0; border-radius: 10px; background: #efe6cf; font-size: 12px; }
 @media (max-width: 1420px) { #topbar { gap: 6px; padding: 0 8px; } .topbtn { padding: 0 6px; } .brand { font-size: 12px; letter-spacing: .06em; } #search { width: 110px; } #topbar label span { display: none; } }
 @media (max-width: 1230px) { .brand { display: none; } #search { width: 90px; } .datechip { padding: 3px 6px; font-size: 12px; } }
+
+/* ---- M7: tutorial tour */
+#tour { position: absolute; inset: 0; z-index: 70; }
+.tour-shade { position: absolute; border-radius: 8px; pointer-events: none; transition: all .25s; }
+.tour-card { position: absolute; background: var(--paper); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 14px 16px; }
+.tour-card h3 { margin: 2px 0 6px; font-size: 16px; } .tour-card p { margin: 0 0 10px; color: var(--ink2); line-height: 1.4; }

@@ -1,0 +1,146 @@
+{
+ "_note": "Special Areas (otorita) and organic private industry. All values are game-design assumptions, not measured data.",
+ "setupCostGdpShare": 0.0004,
+ "maxKec": 80,
+ "maxPphCut": 0.9,
+ "easeGovBoost": 0.2,
+ "easeStabilityCostPerKec": 0.002,
+ "organic": {
+  "baseRate": 0.06,
+  "roiRef": 0.25,
+  "taxElasticity": 1.5,
+  "climateRef": 50,
+  "stabilityRef": 60,
+  "maxPerYear": 8,
+  "maxPerYearPerTrillionGdp": 0.0,
+  "sampleKec": 260,
+  "capExponent": 0.6,
+  "minYearGap": 0
+ },
+ "lanes": {
+  "_note": "Approximate main international shipping routes through the archipelago (hand-drawn polylines [lon,lat]); not survey data.",
+  "radiusKm": 160,
+  "maxBonus": 0.12,
+  "portLevelWeight": [
+   0,
+   0.35,
+   0.6,
+   0.85,
+   1.0
+  ],
+  "industryWeight": 0.4,
+  "spillWeight": 0.5,
+  "routes": {
+   "Malacca Strait": [
+    [
+     95.0,
+     5.9
+    ],
+    [
+     97.5,
+     4.6
+    ],
+    [
+     99.8,
+     3.0
+    ],
+    [
+     101.8,
+     2.0
+    ],
+    [
+     103.5,
+     1.3
+    ]
+   ],
+   "Singapore \u2013 Karimata \u2013 Java Sea": [
+    [
+     104.2,
+     1.1
+    ],
+    [
+     105.5,
+     -1.0
+    ],
+    [
+     107.2,
+     -3.0
+    ],
+    [
+     110.0,
+     -5.6
+    ],
+    [
+     113.0,
+     -6.3
+    ],
+    [
+     116.0,
+     -6.2
+    ]
+   ],
+   "Sunda Strait": [
+    [
+     105.4,
+     -5.8
+    ],
+    [
+     105.8,
+     -6.4
+    ],
+    [
+     104.0,
+     -7.5
+    ],
+    [
+     100.0,
+     -6.0
+    ]
+   ],
+   "Lombok \u2013 Makassar": [
+    [
+     115.9,
+     -8.9
+    ],
+    [
+     116.0,
+     -6.2
+    ],
+    [
+     117.3,
+     -2.0
+    ],
+    [
+     118.5,
+     0.0
+    ],
+    [
+     120.0,
+     2.0
+    ],
+    [
+     123.0,
+     3.5
+    ]
+   ],
+   "Eastern route (Banda \u2013 Ombai)": [
+    [
+     116.0,
+     -8.5
+    ],
+    [
+     119.5,
+     -8.3
+    ],
+    [
+     124.0,
+     -8.4
+    ],
+    [
+     127.0,
+     -6.5
+    ]
+   ]
+  }
+ }
+}
