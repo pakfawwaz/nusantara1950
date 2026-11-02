@@ -89,7 +89,7 @@ async function boot(): Promise<void> {
   });
   clock.onSpeed(s => top.setSpeed(s));
   const watcher = new EventWatcher(game, clock, k => top.setBadge(k), () => { void import('./ui/ending').then(m => m.openEnding(game, () => watcher.endClosed())); });
-  const admin = new AdminPanel(game, () => { sel.setTool('split'); }, fc => view.setPreview(fc));
+  const admin = new AdminPanel(game, () => { sel.setTool('split'); }, fc => view.setPreview(fc), kecs => { inspector.keepScope = true; sel.set(kecs); });
   inspector.setAdmin(admin);
   new SplitTool(view, sel, game, (kec, line) => { inspector.showTab('admin'); admin.openSplit(kec, line, () => view.setPreview(null)); });
   const bctx = { game, sim, view, setHeat };

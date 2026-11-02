@@ -8,12 +8,14 @@ import type { SimWorld } from '../sim/types';
 
 // state of the special-area form survives the panel being redrawn every month
 const zf = { name: '', cut: 0.5, ease: 0.5 };
+const pickUi = { scroll: 0, filter: '' };
+const picked = new Set<string>(); // regencies ticked in the province-formation list
 
 export interface AdminCtx { scope: 'kecamatan' | 'regency' | 'province'; sel: number[]; primary: number }
 const PIECE_COLORS = ['#3f7cc0', '#d9822b', '#4a9a5a', '#a2569d', '#c24a4a', '#2d9aa6'];
 
 export class AdminPanel {
-  constructor(private game: Game, private startSplit: () => void, private showPreview: (fc: GeoJSON.FeatureCollection | null) => void) {}
+  constructor(private game: Game, private startSplit: () => void, private showPreview: (fc: GeoJSON.FeatureCollection | null) => void, private selectKecs: (kecs: number[]) => void = () => {}) {}
   private get w() { return this.game.world; }
 
   /** Draw split / merge pieces on the map while a dialog is open. */
@@ -29,6 +31,24 @@ export class AdminPanel {
   }
   private regName = (id: string) => this.w.regencies[this.w.regIndex.get(id) as number]?.name ?? id;
 
+
+
+  /** A checklist of the regencies of province `p` so a new province can be assembled without clicking each on the map. */
+  private regencyPicker(p: number, touched: string[]): HTMLElement {
+    const w = this.w; const regs = w.regencies.filter((_r, k) => w.regProv[k] === p);
+    const ids = new Set(regs.map(r => r.id)); for (const id of [...picked]) if (!ids.has(id)) picked.delete(id);
+    const box = h('div', { class: 'regpick' }); const filter = h('input', { type: 'search', placeholder: 'Filter regencies…', style: 'width:100%' }); const count = h('span', { class: 'dim' });
+    const sync = (): void => { count.textContent = `${picked.size} ticked · ${fmtPop([...picked].reduce((s: number, id: string) => s + w.regencies[w.regIndex.get(id) as number].kec.reduce((a: number, i: number) => a + w.pop[i], 0), 0))} people`; this.selectKecs([...picked].flatMap(id => w.regencies[w.regIndex.get(id) as number].kec)); };
+    const rows = [...regs].sort((a, b) => a.name.localeCompare(b.name)).map(r => { const c = h('input', { type: 'checkbox' }); c.checked = picked.has(r.id); c.addEventListener('change', () => { if (c.checked) picked.add(r.id); else picked.delete(r.id); sync(); });
+      const row = h('label', { class: 'setrow', 'data-n': r.name.toLowerCase() }, c, h('span', {}, r.name, h('small', { text: `${r.type} · ${fmtPop(r.kec.reduce((s, i) => s + w.pop[i], 0))}` }))); return { row, c, r }; });
+    const applyFilter = (): void => { const q = filter.value.toLowerCase(); pickUi.filter = filter.value; rows.forEach(x => { x.row.style.display = x.row.dataset.n?.includes(q) ? '' : 'none'; }); }; filter.value = pickUi.filter; filter.addEventListener('input', applyFilter); applyFilter();
+    const list = h('div', { style: 'max-height:220px;overflow:auto;border:1px solid var(--line);border-radius:6px;padding:4px 6px' }, ...rows.map(x => x.row));
+    list.addEventListener('scroll', () => { pickUi.scroll = list.scrollTop; }); window.setTimeout(() => { list.scrollTop = pickUi.scroll; }, 0);
+    const setAll = (f: (id: string) => boolean): void => { rows.forEach(x => { x.c.checked = f(x.r.id); if (x.c.checked) picked.add(x.r.id); else picked.delete(x.r.id); }); sync(); };
+    const adj = (): void => { const next = new Set(picked); for (const id of picked) for (const i of w.regencies[w.regIndex.get(id) as number].kec) for (const j of w.neighbors[i]) { const k = w.kecReg[j]; if (k >= 0 && w.regProv[k] === p) next.add(w.regencies[k].id); } setAll(id => next.has(id)); };
+    box.append(filter, list, h('div', { class: 'btnrow' }, h('button', { class: 'btn', type: 'button', text: 'Tick the map selection', onclick: () => setAll(id => touched.includes(id) || picked.has(id)) }), h('button', { class: 'btn', type: 'button', text: 'Add neighbours', disabled: picked.size === 0, onclick: adj }), h('button', { class: 'btn', type: 'button', text: 'Clear', onclick: () => setAll(() => false) })), count); sync0(count, picked, w);
+    return box;
+  }
 
   /** Special areas (otorita): create from the current selection, adjust or dissolve. */
   private specialAreas(into: HTMLElement, sel: number[]): void {
@@ -73,8 +93,8 @@ export class AdminPanel {
           sec(reg.name, stat(reg, reg.name),
             h('div', { class: 'btnrow' }, btn('Rename…', () => this.dlgRename('regency', reg.id, reg.name)), btn('Set capital…', () => this.dlgCapital('regency', reg.id, reg.kec)),
               btn('Merge into adjacent regency…', () => this.dlgMergeReg(reg.id)), btn('Move to another province…', () => this.dlgMoveReg(reg.id))));
-          sec('Province formation', h('p', { text: `The selection touches ${regsTouched.length} regenc${regsTouched.length === 1 ? 'y' : 'ies'}. A new province needs ≥ 5 contiguous regencies of one province.` }),
-            h('div', { class: 'btnrow' }, btn('Create province from these regencies…', () => this.dlgCreateProvince(regsTouched))));
+          sec('Province formation', h('p', { text: 'Tick the regencies of this province that should form the new one (they must be contiguous, at least 5). Ticking highlights them on the map.' }), this.regencyPicker(p, regsTouched),
+            h('div', { class: 'btnrow' }, btn('Create province from ticked regencies…', () => this.dlgCreateProvince([...picked]), picked.size === 0)));
         } else {
           sec(prov.name, stat(prov, prov.name), h('div', { class: 'btnrow' }, btn('Rename…', () => this.dlgRename('province', prov.id, prov.name)), btn('Set capital…', () => this.dlgCapital('province', prov.id, w.provinceKec(p))), btn('Merge into adjacent province…', () => this.dlgMergeProv(prov.id))));
         }
@@ -165,3 +185,5 @@ export class AdminPanel {
     });
   }
 }
+
+function sync0(count: HTMLElement, picked: Set<string>, w: { regencies: Array<{ kec: number[] }>; regIndex: Map<string, number>; pop: ArrayLike<number> }): void { let pop = 0; for (const id of picked) for (const i of w.regencies[w.regIndex.get(id) as number].kec) pop += w.pop[i]; count.textContent = `${picked.size} ticked · ${(pop / 1e6).toFixed(2)} M people`; }

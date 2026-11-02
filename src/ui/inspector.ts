@@ -21,12 +21,14 @@ const num = (v: number, d = 0) => v.toLocaleString('en-US', { maximumFractionDig
 export class Inspector {
   private el = $('inspector'); private scope: Scope = 'kecamatan'; private tab: Tab = 'overview';
   constructor(private world: World, private game: Game, private sel: Selection, private onSelectGroup: (kecs: number[], primary: number) => void, private onFit: (kecs: number[]) => void) {
-    sel.onChange(() => { this.scope = 'kecamatan'; this.render(); });
+    sel.onChange(() => { if (this.keepScope) this.keepScope = false; else this.scope = 'kecamatan'; this.render(); });
     this.render();
   }
   private admin: AdminPanel | null = null;
   setAdmin(p: AdminPanel): void { this.admin = p; }
   /** Open straight on the Admin tab (used after drawing a split line, etc.). */
+  /** Set by panels that change the selection themselves (e.g. the regency picker) so the scope stays. */
+  keepScope = false;
   showTab(tab: Tab): void { this.tab = tab; this.render(); }
   refresh(): void { this.render(); }
   private scopeKecs(): { kecs: number[]; title: string; sub: string; locked: boolean; kind: Scope; extra?: string } | null {
