@@ -1,0 +1,56 @@
+{
+ "_note": "Regional petitions (aspirasi pemekaran). Values are game tunables. Names come from the modern (2020s) administrative data attached to each kecamatan where possible.",
+ "scanEveryMonths": 6,
+ "maxPending": 4,
+ "maxNewPerScan": 1,
+ "responseMonths": 18,
+ "cooldownMonths": 36,
+ "rejectStabilityHit": 1.2,
+ "expireStabilityHit": 2.0,
+ "threshold": 0.5,
+ "drawScale": 0.8,
+ "regency": {
+  "remoteKm": 90,
+  "bigPop": 900000,
+  "minParentKec": 10,
+  "fallbackMinPop": 1500000,
+  "fallbackMinKec": 20,
+  "fallbackShare": 0.35
+ },
+ "province": {
+  "remoteKm": 350,
+  "bigPop": 4000000
+ },
+ "switch": {
+  "minOwnKm": 150,
+  "ratio": 0.55
+ },
+ "kecamatan": {
+  "minPop": 150000,
+  "minAreaKm2": 60,
+  "bigPop": 450000
+ },
+ "stabilityWeight": 0.3,
+ "eraDraw": [
+  [
+   1950,
+   0.3
+  ],
+  [
+   1998,
+   0.4
+  ],
+  [
+   1999,
+   1.2
+  ],
+  [
+   2010,
+   0.8
+  ],
+  [
+   2050,
+   0.8
+  ]
+ ]
+}

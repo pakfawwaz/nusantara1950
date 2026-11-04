@@ -45,7 +45,14 @@
    "friction": 0.25,
    "capitalPull": 0.25,
    "maxShareMonthly": 0.004,
-   "ruralUrbanBoost": 1.6
+   "ruralUrbanBoost": 1.6,
+   "accessWeight": 0.7,
+   "amenityWeights": {
+    "elec": 0.3,
+    "water": 0.15,
+    "road": 0.3,
+    "school": 0.25
+   }
   },
   "transmigration": {
    "costPerPersonRp": 25000000,

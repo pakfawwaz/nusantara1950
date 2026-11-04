@@ -18,6 +18,7 @@ import { RouteTool } from './map/routeTool';
 import { infraFeatures, infraSignature } from './map/infraLayer';
 import type { ModeResult } from './map/modes';
 import { toast } from './ui/modal';
+import { Demands } from './demands';
 import { SimCore, newNation } from './sim/core';
 import { EventWatcher } from './ui/events';
 import * as eventsApi from './sim/events';
@@ -81,7 +82,7 @@ async function boot(): Promise<void> {
       else if (p === 'stats') (await import('./ui/stats')).openStats(game);
       else if (p === 'industry') (await import('./ui/industry')).openIndustry(game, pickKec);
       else if (p === 'finance') (await import('./ui/finance')).openFinance(game);
-      else if (p === 'events') (await import('./ui/events')).openChronicle(game, id => watcher.open(id));
+      else if (p === 'events') (await import('./ui/events')).openChronicle(game, id => watcher.open(id), { grant: id => demands.grant(id).then(r => { watcher.refreshBadge(); return r; }), refuse: id => { demands.refuse(id); watcher.refreshBadge(); }, show: kecs => { sel.set(kecs, kecs[0]); fitKecs(kecs); } });
       else if (p === 'settings') (await import('./ui/settings')).openSettings(game);
       else if (p === 'transport') (await import('./ui/transport')).openTransport(game, sim, id => { void import('./ui/build').then(m => m.openUpgradeDialog(bctx, id)); });
       else (await import('./ui/saveload')).openSaveLoad(game, sim, autosave);
@@ -89,6 +90,7 @@ async function boot(): Promise<void> {
   });
   clock.onSpeed(s => top.setSpeed(s));
   const watcher = new EventWatcher(game, clock, k => top.setBadge(k), () => { void import('./ui/ending').then(m => m.openEnding(game, () => watcher.endClosed())); });
+  const demands = new Demands(game, p => toast(`Petition: ${p.title}. See Events.`));
   const admin = new AdminPanel(game, () => { sel.setTool('split'); }, fc => view.setPreview(fc), kecs => { inspector.keepScope = true; sel.set(kecs); });
   inspector.setAdmin(admin);
   new SplitTool(view, sel, game, (kec, line) => { inspector.showTab('admin'); admin.openSplit(kec, line, () => view.setPreview(null)); });
@@ -114,7 +116,7 @@ async function boot(): Promise<void> {
   // monthly tick: refresh the chrome, recolour dynamic map modes (throttled at high speed), keep the inspector live, autosave
   let ticks = 0;
   sim.tickListeners.push(() => {
-    ticks++; view.setZones(game.nation.zones.list); refreshChrome(); watcher.check(); const every = clock.speed >= 3 ? 3 : 1;
+    ticks++; void demands.tick().then(() => watcher.refreshBadge()); view.setZones(game.nation.zones.list); refreshChrome(); watcher.check(); const every = clock.speed >= 3 ? 3 : 1;
     refreshInfra();
     if (ticks % every === 0) { if (!mode.static && !heatOn) applyMode(mode.id); inspector.refresh(); }
     void autosave.tick();
@@ -138,6 +140,6 @@ async function boot(): Promise<void> {
   $('loading').remove();
   if (!pending && !tutorialSeen()) window.setTimeout(() => startTutorial(), 400);
   // Debug hook used by the headless browser checks; harmless in production.
-  (window as unknown as { __game: unknown }).__game = { world, view, sel, labels, inspector, applyMode, game, admin, sim, clock, autosave, bctx, watcher, events: eventsApi };
+  (window as unknown as { __game: unknown }).__game = { world, view, sel, labels, inspector, applyMode, game, admin, sim, clock, autosave, bctx, watcher, demands, events: eventsApi };
 }
 boot().catch(err => { console.error(err); $('loadmsg').textContent = `Failed to start: ${err instanceof Error ? err.message : String(err)}`; });

@@ -31,12 +31,17 @@ const effectText = (s: Shock): string => {
 };
 
 /** Event log, open decisions and the conditions currently acting on the economy. */
-export function openChronicle(game: Game, decide: (id: string) => void): void {
+export interface AspirationApi { grant: (id: number) => Promise<{ ok: boolean; error?: string; summary?: string }>; refuse: (id: number) => void; show: (kecs: number[]) => void }
+export function openChronicle(game: Game, decide: (id: string) => void, asp?: AspirationApi): void {
   openPanel('Chronicle', 'mid', body => {
     const filt = { v: 'all' }; const root = h('div'); body.append(root);
     const render = () => {
       const n = game.nation, ev = n.ev; root.replaceChildren();
       if (ev.pending.length) root.append(h('h4', { text: 'Awaiting your decision' }), ...ev.pending.map(p => { const d = DECISION.get(p.id); return h('div', { class: 'pending' }, h('div', { class: 'grow' }, h('b', { text: d?.title ?? p.id }), h('div', { class: 'dim', text: `decide by ${monthLabel(p.due)}` })), h('button', { class: 'btn small', type: 'button', text: 'Decide…', onclick: () => decide(p.id) })); }));
+      const pets = n.petitions?.list ?? [];
+      if (asp && pets.length) root.append(h('h4', { text: 'Regional aspirations (aspirasi daerah)' }), h('p', { class: 'dim', text: 'Granting uses the normal reorganisation rules and costs. Declining or ignoring a petition costs some stability.' }), ...pets.map(p => h('div', { class: 'pending petition' }, h('div', { class: 'grow' }, h('b', { text: p.title }), h('p', { text: p.text }),
+        h('div', { class: 'dim', text: `Local support ${Math.round(p.support * 100)}% · cost ${p.cost >= 1e12 ? `Rp ${(p.cost / 1e12).toFixed(2)} T` : `Rp ${(p.cost / 1e9).toFixed(0)} B`} · answer by ${monthLabel(p.due)}` }),
+        h('div', { class: 'btnrow' }, h('button', { class: 'btn primary', type: 'button', text: 'Grant', onclick: () => void asp.grant(p.id).then(r => { toast(r.ok ? (r.summary ?? 'Granted') : (r.error ?? 'Not possible'), !r.ok); render(); }) }), h('button', { class: 'btn', type: 'button', text: 'Decline', onclick: () => { asp.refuse(p.id); render(); } }), h('button', { class: 'btn', type: 'button', text: 'Show on map', onclick: () => asp.show(p.kecs) }))))));
       const act = ev.shocks.filter(s => s.end > n.month && effectText(s));
       if (act.length) root.append(h('h4', { text: 'Conditions now acting on the economy' }), ...act.map(s => h('div', { class: 'logrow' }, h('b', { text: s.name }), h('small', { text: `${effectText(s)} · ends ${monthLabel(s.end)}` }))));
       const rec = ev.disasters.filter(d => n.month - d.start < d.recover);
@@ -54,7 +59,8 @@ export function openChronicle(game: Game, decide: (id: string) => void): void {
 export class EventWatcher {
   private logSeen: number; private opening = false; private shownEnd = false; private deferred = new Set<string>();
   constructor(private game: Game, private clock: Clock, private onBadge: (n: number) => void, private openEnd: () => void) { this.logSeen = game.nation.ev.log.length; this.onBadge(this.pendingCount()); }
-  private pendingCount(): number { return this.game.nation.ev.pending.length; }
+  private pendingCount(): number { return this.game.nation.ev.pending.length + this.game.nation.petitions.list.length; }
+  refreshBadge(): void { this.onBadge(this.pendingCount()); }
   /** Open the dialog for a decision now (from the Chronicle or when it first appears). */
   open(id: string): void {
     if (this.opening) return; this.opening = true; this.clock.blocked = true; this.clock.set(0);

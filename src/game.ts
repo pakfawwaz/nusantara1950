@@ -130,6 +130,8 @@ export class Game {
     await this.gate(); const e = editZone(this.world as unknown as SimWorld, this.nation, id, patch); if (e) return { ok: false, error: e }; this.poke(); return { ok: true, summary: 'Special area updated.' };
   }
   async zoneRemove(id: number): Promise<void> { await this.gate(); removeZone(this.nation, id); this.poke(); }
+  /** Called by the petition engine after it changed the petition list: pushes the new nation state to the worker and refreshes the UI. */
+  petitionsChanged(): void { this.poke(); }
   async setSettings(patch: Partial<Omit<GameSettings, 'lose'>> & { lose?: Partial<GameSettings['lose']> }): Promise<void> {
     await this.gate(); const s = this.nation.settings; const { lose, ...rest } = patch; Object.assign(s, rest); if (lose) Object.assign(s.lose, lose); this.poke();
   }

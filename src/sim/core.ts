@@ -1,3 +1,4 @@
+import { newPetitions } from './petitions';
 import { laneProximity, laneRows } from './lanes';
 import { ZC, newZones, zoneRows, organicIndustry } from './zones';
 import { B, BUD, BUDGET_KEYS, HIST, interp, monthOfYear, yearOf } from './balance';
@@ -26,7 +27,7 @@ export const defaultPolicy = (): Policy => ({
 export function migrateNation(n: Nation, seed: () => TransportState): Nation {
   const d = defaultPolicy(); for (const k of BUDGET_KEYS) { if (n.policy.budget[k] === undefined) n.policy.budget[k] = d.budget[k]; if (n.policy.budgetNext[k] === undefined) n.policy.budgetNext[k] = d.budgetNext[k]; }
   if (!n.transport) { n.transport = seed(); n.transport.dirty = true; }
-  n.zones ??= newZones(); n.ind ??= newIndState(); n.fin ??= newFin(); n.prices ??= newPrices(); n.settings = { ...defaultSettings(), ...(n.settings ?? {}), lose: { ...defaultSettings().lose, ...(n.settings?.lose ?? {}) } }; n.ev ??= newEvents(n.settings.seed); n.end ??= newEnd();
+  n.zones ??= newZones(); n.petitions ??= newPetitions(); n.ind ??= newIndState(); n.fin ??= newFin(); n.prices ??= newPrices(); n.settings = { ...defaultSettings(), ...(n.settings ?? {}), lose: { ...defaultSettings().lose, ...(n.settings?.lose ?? {}) } }; n.ev ??= newEvents(n.settings.seed); n.end ??= newEnd();
   if (!n.fin.loans.length && n.debtExt > 0) seedLegacyDebt(n, n.debtExt);
   return n;
 }
@@ -37,19 +38,19 @@ export function newNation(seed = 1): Nation {
     agg: { pop: 0, gdp: 0, gdppc: 0, eduSat: 0, mys: 0, life: 0, ipm: 0, gov: 1, fund: 1, ineq: 0.4, poverty: 0, urban: 0, tfr: 0, eys: 0, lit: 0 },
     ipmPrev: 0, dIpm: 0.005,
     last: emptyFlows(), series: emptySeries(), flags: { hyper: false, collapse: false }, births: 0, deaths: 0, notices: [], transport: { ...newTransport(), dirty: false },
-    ind: newIndState(), fin: newFin(), prices: newPrices(), settings: defaultSettings(seed), ev: newEvents(seed), end: newEnd(), zones: newZones()
+    ind: newIndState(), fin: newFin(), prices: newPrices(), settings: defaultSettings(seed), ev: newEvents(seed), end: newEnd(), zones: newZones(), petitions: newPetitions()
   };
 }
 
 const kmPerDegLat = 110.57;
 export class SimCore {
   readonly R: number; readonly P: number; stats: UnitStats;
-  tr: TransportSim; private isCap: Uint8Array; private span: Float64Array; private mult = new Float64Array(SECTORS); private delta: Float64Array; polNow = 1; private lowStabMonths = 0; collapseMonths = 0; private ev!: { sector: number[] }; private loc: Float64Array; private zCut: Float64Array; private laneP: Float64Array; private laneM: Float64Array; private zEase: Float64Array; private provMult: Float64Array;
+  tr: TransportSim; private isCap: Uint8Array; private span: Float64Array; private mult = new Float64Array(SECTORS); private delta: Float64Array; polNow = 1; private lowStabMonths = 0; collapseMonths = 0; private ev!: { sector: number[] }; private loc: Float64Array; private amenity: Float64Array; private zCut: Float64Array; private laneP: Float64Array; private laneM: Float64Array; private zEase: Float64Array; private provMult: Float64Array;
   constructor(readonly w: SimWorld, public nation: Nation) {
     this.R = w.regencies.length; this.P = w.provinces.length; const R = this.R, P = this.P;
     this.stats = { regFund: new Float64Array(R), regOp: new Float64Array(R), regPad: new Float64Array(R), regDbh: new Float64Array(R), regDau: new Float64Array(R), regDak: new Float64Array(R), regGov: new Float64Array(R).fill(1), regStab: new Float64Array(R).fill(B.stability.base), regPop: new Float64Array(R),
       provFund: new Float64Array(P), provOp: new Float64Array(P), provDau: new Float64Array(P), provPad: new Float64Array(P), provPop: new Float64Array(P), provGov: new Float64Array(P).fill(1) };
-    this.loc = new Float64Array(w.n).fill(1); this.zCut = new Float64Array(w.n); this.laneP = new Float64Array(w.n); this.laneM = new Float64Array(w.n); laneProximity(w, this.laneP); this.zEase = new Float64Array(w.n); this.provMult = new Float64Array(this.P).fill(1); this.isCap = new Uint8Array(w.n); this.span = new Float64Array(R); this.delta = new Float64Array(w.n);
+    this.loc = new Float64Array(w.n).fill(1); this.zCut = new Float64Array(w.n); this.amenity = new Float64Array(w.n); this.laneP = new Float64Array(w.n); this.laneM = new Float64Array(w.n); laneProximity(w, this.laneP); this.zEase = new Float64Array(w.n); this.provMult = new Float64Array(this.P).fill(1); this.isCap = new Uint8Array(w.n); this.span = new Float64Array(R); this.delta = new Float64Array(w.n);
     w.regencies.forEach(r => { if (r.capital >= 0) this.isCap[r.capital] = 1; });
     this.tr = new TransportSim(w, nation);
     if (nation.transport.dirty) { // an administrative edit changed the network: recompute access, and make the new rows' access their baseline so output does not jump
@@ -125,14 +126,16 @@ export class SimCore {
 
   /** Net migration between neighbouring kecamatan: people move up the income gradient. Moves people only (births / deaths untouched), so national population is conserved. */
   migrate(dt: number): void {
-    const w = this.w, M = B.demography.migration, d = this.delta; d.fill(0, 0, w.n);
+    const w = this.w, M = B.demography.migration, d = this.delta; d.fill(0, 0, w.n); const am = this.amenity, AW = M.amenityWeights;
+    // amenity: what a place offers beyond income (power, water, roads, schools) — people move towards it and away from places that lack it
+    for (let i = 0; i < w.n; i++) am[i] = w.alive[i] ? AW.elec * w.elec[i] + AW.water * w.water[i] + AW.road * Math.min(1, w.roadClass[i] / 4) + AW.school * Math.min(1, w.mys[i] / 9) : 0;
     for (let i = 0; i < w.n; i++) {
       if (!w.alive[i]) continue; const k = w.kecReg[i]; if (k < 0 || this.locked(k)) continue; const yi = Math.max(1e5, w.grdp[i] / Math.max(1, w.pop[i]));
       let tot = 0; const nb = w.neighbors[i]; const want: number[] = [];
       for (let q = 0; q < nb.length; q++) {
         const j = nb[q], kj = w.kecReg[j]; if (kj < 0 || this.locked(kj)) { want.push(0); continue; }
         const yj = Math.max(1e5, w.grdp[j] / Math.max(1, w.pop[j])) * (this.isCap[j] ? 1 + M.capitalPull : 1);
-        let g = Math.log(yj / yi) - M.friction; if (g <= 0) { want.push(0); continue; }
+        let g = Math.log(yj / yi) + M.accessWeight * (am[j] - am[i]) - M.friction; if (g <= 0) { want.push(0); continue; }
         g *= M.ratePerYear * (w.urban[j] > 0.5 && w.urban[i] < 0.3 ? M.ruralUrbanBoost : 1); want.push(g); tot += g;
       }
       if (tot <= 0) continue; const share = Math.min(M.maxShareMonthly, tot * dt), scale = share / tot;
